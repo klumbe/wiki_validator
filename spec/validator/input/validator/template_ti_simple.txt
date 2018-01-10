@@ -1,0 +1,21 @@
+<!-- Template only using TemplateItems for validation
+As the normal setting are min = 1 and max = ?, one need to specify both here
+-->
+#order[1, 1]{
+  |strict: true
+
+  #section[1, 1]{
+    |level: 1
+    |title: Heading 1
+  }
+
+  #section[1, 1]{
+    |level: 1
+    |title: Heading 2
+  }
+
+  #section[1, 1]{
+    |level: 1
+    |title: Heading 3
+  }
+}

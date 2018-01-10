@@ -1,3 +1,12 @@
+$LOAD_PATH << File.dirname(__FILE__)
+
+Dir[File.expand_path("elements/*.rb", File.dirname(__FILE__))].each do |file|
+  require file
+end
+
+require 'wiki_validator/validator/validation/validation_status'
+require 'wiki_validator/validator/validation/page_dto'
+
 module WikiValidator
 
 	class Validator
@@ -9,8 +18,8 @@ module WikiValidator
 			page_tree = page_dto.ast
 
 			template_name = page_dto.name
-			tempate_tree = page_dto.ast
-			
+			template_tree = template_dto.ast
+
 			# check constraints
 			status = check_constraints(page_name, template_name, page_tree, template_tree)
 
@@ -19,7 +28,7 @@ module WikiValidator
 
 		private
 
-			def check_constraints(page_name, template_name, page_tree, template_tree)
+			def self.check_constraints(page_name, template_name, page_tree, template_tree)
 				status = ValidationStatus.new(page_name, template_name)
 				template_tree.each do |item|
 					validation_item = item.validate(page_tree)

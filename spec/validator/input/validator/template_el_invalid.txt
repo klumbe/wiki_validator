@@ -1,0 +1,13 @@
+<!-- As every parsed element is a constraint, the order does not matter as long
+as no TemplateItem with type :order is used to wrap them -->
+
+= Heading 2 =
+= Heading 1 =
+= Heading 3 =
+== Non existent Heading ==
+
+Some strings come here
+
+# List-Item 1
+[[Link_internal]]
+[[Link_not_found]]

@@ -2,7 +2,6 @@ $LOAD_PATH << File.dirname(__FILE__)
 
 require 'elements/section.rb'
 require 'content_parser.rb'
-require 'constants.rb'
 
 module WikiValidator
 
