@@ -21,8 +21,21 @@ module WikiValidator
     end
 
     def to_markup
-      lev = '='*@level
-      return "#{lev} #{@title} #{lev}"
+      comment_before = ''
+      str = @title
+      if str == ''
+        str = Comment.new('', content_raw: 'Put your section title here.').to_markup
+      end
+
+      count = @level
+      if @level == -1
+        count = 1
+        comment = Comment.new('', content_raw: 'Change section level as needed:')
+        comment_before = "#{comment.to_markup}\n"
+      end
+      lev = '='*count
+      markup = "#{comment_before}#{lev}#{str}#{lev}"
+      return markup
     end
 
     private

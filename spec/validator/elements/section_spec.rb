@@ -79,6 +79,32 @@ describe WikiValidator::Section do
     end
   end
 
+  describe '#to_markup' do
+    context 'title and level defined' do
+      it 'returns a section string without comments' do
+        section = Section.new('=Section1=')
+        markup = section.to_markup
+        expect(markup).to eq('=Section1=')
+      end
+    end
+
+    context 'level undefined' do
+      it 'returns a section string with comment about level-freedom' do
+        section = Section.new('', title: 'Section without level')
+        markup = section.to_markup
+        expect(markup).to eq("<!--Change section level as needed:-->\n=Section without level=")
+      end
+    end
+
+    context 'title undefined' do
+      it 'returns a section string with comment for the title' do
+        section = Section.new('', level: 2)
+        markup = section.to_markup
+        expect(markup).to eq('==<!--Put your section title here.-->==')
+      end
+    end
+  end
+
   describe '#validate' do
     before :all do
       @elements = [

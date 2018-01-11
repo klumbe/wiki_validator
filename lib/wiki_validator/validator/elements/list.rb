@@ -42,7 +42,7 @@ module WikiValidator
           symbol = $1[0]
           set_subtype(symbol)
         else
-          @level = params.fetch(:level, 1)
+          @level = params.fetch(:level, 1).to_i
         end
       end
 
