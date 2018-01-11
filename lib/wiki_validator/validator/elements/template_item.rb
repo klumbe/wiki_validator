@@ -8,7 +8,7 @@ module WikiValidator
     attr_reader :min, :max, :attribs
 
     # attributes not used for comparing elements
-    SPECIAL_ATTRIBUTES = [:min, :max, :amount]
+    SPECIAL_ATTRIBUTES = [:min, :max, :amount, :strict]
 
     @re_type = /(?<type>[a-z]+)/
     @re_min_max = /(?<min>\d+|\?)[ ]*,[ ]*(?<max>\d+|\?)/
@@ -83,35 +83,13 @@ module WikiValidator
       fill = ''
       if @collections.include?(@type)
         # handle collection
-        @children.each do |child|
-          element_str += "\n#{child.to_markup}\n"
-        end
+        element_str += collection_to_markup()
       else
         # handle element
-        if @type == :string
-          if !@attribs[:raw].nil?
-            raw = @raw
-          else
-            raw = 'some_string'
-          end
-          element = Element.new(raw, type: @type)
-        elsif @type == :newline
-          raw = "\n"
-          element = Element.new(raw, type: @type)
-        else
-          params = clean_attributes()
-          element_class = Helper.find_element_class(self)
-          if element_class.nil?
-            # not a valid TemplateItem type
-            str = "#{@type.upcase} is a invalid element type.\n Check template."
-            element = Comment.new('', content_raw: str)
-          else
-            element = element_class.new("", params)
-          end
-          fill = "\n"
-        end
-        element_str += "#{fill}#{element.to_markup}#{fill}"
+        element_str += element_to_markup()
       end
+
+      element_str += children_to_markup()
 
       opening_comment = Helper.create_comment(@type, @min, @max)
       closing_comment = Comment.new("", content_raw: "/#{@type.upcase} -----").to_markup
@@ -609,6 +587,64 @@ module WikiValidator
 
         return error
       end
+
+      def collection_to_markup
+          str = ''
+
+          case @type
+          when :any
+            str = 'Every item can (within the bounds) be used multiple times.\n'
+          when :order
+            str = 'Every item needs to appear in the correct order.'
+            if @attribs[:strict] == true
+              str += "\nSTRICT mode: No other elements are allowed between them."
+            end
+          end
+
+          collection_comment = Comment.new('', content_raw: str).to_markup
+
+          return collection_comment
+      end
+
+      def element_to_markup
+        element_str = ''
+
+        if @type == :string
+          if !@attribs[:raw].nil?
+            raw = @attribs[:raw]
+          else
+            raw = 'some_string'
+          end
+          raw += ' '
+          element = Element.new(raw, type: @type)
+        elsif @type == :newline
+          raw = "\n"
+          element = Element.new(raw, type: @type)
+        else
+          params = clean_attributes()
+          element_class = Helper.find_element_class(self)
+          if element_class.nil?
+            # not a valid TemplateItem type
+            str = "#{@type.upcase} is an invalid element type.\n Check template."
+            element = Comment.new('', content_raw: str)
+          else
+            element = element_class.new("", params)
+          end
+          fill = "\n"
+        end
+
+        element_str += "#{fill}#{element.to_markup}#{fill}"
+        return element_str
+      end
+
+      def children_to_markup
+        children_str = ''
+        @children.each do |child|
+          children_str += "\n#{child.to_markup}\n"
+        end
+        return children_str
+      end
+
   end
 
 end

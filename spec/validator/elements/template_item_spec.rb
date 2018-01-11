@@ -352,4 +352,40 @@ describe WikiValidator::TemplateItem do
     end
 
   end
+
+  describe '#to_markup' do
+    context 'type is a collection' do
+      context 'type is order' do
+        it 'returns a markup string containing all child elements and a comment' do
+
+        end
+      end
+
+      context 'type is any' do
+        it 'returns a markup string containing all child elements and a comment'
+      end
+    end
+
+    context 'type is an element' do
+      it 'returns a markup containing the section and its children with comments' do
+        str = "#section[2, 3]"
+        element = TemplateItem.new(str)
+        element.add_child(TemplateItem.new('#string[5]'))
+        markup = element.to_markup
+        result = "<!--SECTION has to exist between 2 and 3 times.-->\n\n"\
+                  "<!--Change section level as needed:-->\n"\
+                  "=<!--Put your section title here.-->=\n\n"\
+                  "<!--STRING has to exist at least 5 times.-->\n"\
+                  "some_string some_string some_string some_string some_string \n"\
+                  "<!--/STRING ------->\n\n"\
+                  "<!--Change section level as needed:-->\n"\
+                  "=<!--Put your section title here.-->=\n\n"\
+                  "<!--STRING has to exist at least 5 times.-->\n"\
+                  "some_string some_string some_string some_string some_string \n"\
+                  "<!--/STRING ------->\n\n"\
+                  "<!--/SECTION ------->"
+        expect(markup).to eq(result)
+      end
+    end
+  end
 end

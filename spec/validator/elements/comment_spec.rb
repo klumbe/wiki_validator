@@ -25,7 +25,6 @@ describe WikiValidator::Comment do
     it 'returns the element as markup-string' do
       comment = Comment.new(@comment_str2)
       markup = comment.to_markup
-      STDERR.puts markup
       expect(markup).to be_an_instance_of(String)
       expect(markup).to eq(@comment_str2)
     end
