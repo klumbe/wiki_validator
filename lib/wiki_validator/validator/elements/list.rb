@@ -7,7 +7,7 @@ module WikiValidator
 
     attr_reader :level
 
-    @regex = /^([#\*:;]+)[^\n\S]*(.*)$/
+    @regex = /^([#\*:;]+)(.*)$/
     @starts_with = /^[#\*:;]/
 
     def equals?(element)
@@ -23,7 +23,12 @@ module WikiValidator
     end
 
     def to_markup
-      return "#{@raw[0]*@level} #{@content_raw}"
+      str = @content_raw
+      if str == ''
+        # create placeholder to inform the user what is expected here
+        str = Comment.new('', content_raw: 'Put your list string here.').to_markup
+      end
+      return "#{get_symbol()*@level}#{str}"
     end
 
     private
@@ -33,9 +38,11 @@ module WikiValidator
         match = List.regex.match(@raw)
         if match
           @level = $1.length
-          @content_raw = $2.strip
+          @content_raw = $2
           symbol = $1[0]
           set_subtype(symbol)
+        else
+          @level = params.fetch(:level, 1)
         end
       end
 
@@ -52,6 +59,24 @@ module WikiValidator
           @subtype = :definition
         end
       end
+
+      def get_symbol
+
+        symbol = ''
+        case @subtype
+        when :enumeration
+          symbol = '#'
+        when :indent
+          symbol = ':'
+        when :definition
+          symbol = ';'
+        else
+          symbol = '*'
+        end
+
+        return symbol
+      end
+
   end
 
 end

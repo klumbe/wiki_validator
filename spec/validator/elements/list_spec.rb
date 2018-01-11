@@ -96,6 +96,25 @@ describe WikiValidator::List do
     end
   end
 
+  describe '#to_markup' do
+    context 'has a specific subtype' do
+      it 'is of and returns a enumeration' do
+        str = '# list item'
+        list = List.new(str)
+        markup = list.to_markup()
+        expect(markup).to eq(str)
+      end
+    end
+
+    context 'subtype and content_raw not set' do
+      it 'returns a bullet item' do
+        list = List.new('')
+        markup = list.to_markup()
+        expect(markup).to eq('*<!--Put your list string here.-->')
+      end
+    end
+  end
+
   describe '#validate' do
     before :all do
       @elements = [
@@ -118,7 +137,7 @@ describe WikiValidator::List do
       expect(validation_item2.valid?).to eq(true)
     end
 
-    it 'takes a list of elements and returns an invalid validation_item' do
+    it 'is no list and takes a list of elements and returns an invalid validation_item' do
       list = List.new('[[Not_in_list]]')
       validation_item = list.validate(@elements)
       expect(validation_item).to be_an_instance_of(ValidationItem)
