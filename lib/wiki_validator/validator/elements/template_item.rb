@@ -80,7 +80,7 @@ module WikiValidator
       amount = [@min, 1].max
       element_str = ''
       element = nil
-      fill = ''
+
       if @collections.include?(@type)
         # handle collection
         element_str += collection_to_markup()
@@ -593,6 +593,7 @@ module WikiValidator
 
           case @type
           when :any
+            str = 'Any element can be picket and (within the bounds) exist multiple times.'
             str = 'Every item can (within the bounds) be used multiple times.\n'
           when :order
             str = 'Every item needs to appear in the correct order.'
@@ -609,6 +610,7 @@ module WikiValidator
       def element_to_markup
         element_str = ''
 
+        fill = ''
         if @type == :string
           if !@attribs[:raw].nil?
             raw = @attribs[:raw]
@@ -633,7 +635,7 @@ module WikiValidator
           fill = "\n"
         end
 
-        element_str += "#{fill}#{element.to_markup}#{fill}"
+        element_str += "#{element.to_markup}#{fill}"
         return element_str
       end
 

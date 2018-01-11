@@ -357,12 +357,49 @@ describe WikiValidator::TemplateItem do
     context 'type is a collection' do
       context 'type is order' do
         it 'returns a markup string containing all child elements and a comment' do
-
+          element = TemplateItem.new('#order[?, 1]')
+          element.add_child(TemplateItem.new('#string'))
+          element.add_child(TemplateItem.new('#section'))
+          element.add_child(TemplateItem.new('#link'))
+          markup = element.to_markup
+          str = "<!--ORDER must not appear more often than 1 time(s).-->\n"\
+                "<!--Every item needs to appear in the correct order.-->\n"\
+                "<!--STRING has to exist at least 1 time(s).-->\n"\
+                "some_string \n"\
+                "<!--/STRING ------->\n\n"\
+                "<!--SECTION has to exist at least 1 time(s).-->\n"\
+                "<!--Change section level as needed:-->\n"\
+                "=<!--Put your section title here.-->=\n\n"\
+                "<!--/SECTION ------->\n\n"\
+                "<!--LINK has to exist at least 1 time(s).-->\n"\
+                "[<!--put undefined link here-->]\n\n"\
+                "<!--/LINK ------->\n\n"\
+                "<!--/ORDER ------->"
+          expect(markup).to eq(str)
         end
       end
 
       context 'type is any' do
-        it 'returns a markup string containing all child elements and a comment'
+        it 'returns a markup string containing all child elements and a comment' do
+          element = TemplateItem.new('#any[1, ?]')
+          element.add_child(TemplateItem.new('#string'))
+          element.add_child(TemplateItem.new('#section'))
+          element.add_child(TemplateItem.new('#link'))
+          markup = element.to_markup
+          str = "<!--ANY has to exist at least 1 time(s).-->\n"\
+                "<!--Any element can be picket and (within the bounds) exist multiple times.-->\n"\
+                "<!--STRING has to exist at least 1 time(s).-->\n"\
+                "some_string \n"\
+                "<!--/STRING ------->\n\n"\
+                "<!--SECTION has to exist at least 1 time(s).-->\n"\
+                "<!--Change section level as needed:-->\n"\
+                "=<!--Put your section title here.-->=\n\n"\
+                "<!--/SECTION ------->\n\n"\
+                "<!--LINK has to exist at least 1 time(s).-->\n"\
+                "[<!--put undefined link here-->]\n\n"\
+                "<!--/LINK ------->\n\n"\
+                "<!--/ANY ------->"
+        end
       end
     end
 
@@ -372,12 +409,12 @@ describe WikiValidator::TemplateItem do
         element = TemplateItem.new(str)
         element.add_child(TemplateItem.new('#string[5]'))
         markup = element.to_markup
-        result = "<!--SECTION has to exist between 2 and 3 time(s).-->\n\n"\
+        result = "<!--SECTION has to exist between 2 and 3 time(s).-->\n"\
                   "<!--Change section level as needed:-->\n"\
                   "=<!--Put your section title here.-->=\n\n"\
                   "<!--STRING has to exist at least 5 time(s).-->\n"\
                   "some_string some_string some_string some_string some_string \n"\
-                  "<!--/STRING ------->\n\n"\
+                  "<!--/STRING ------->\n"\
                   "<!--Change section level as needed:-->\n"\
                   "=<!--Put your section title here.-->=\n\n"\
                   "<!--STRING has to exist at least 5 time(s).-->\n"\
