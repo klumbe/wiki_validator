@@ -1,7 +1,7 @@
 $LOAD_PATH << File.dirname(__FILE__)
 require 'element.rb'
 module WikiValidator
-  
+
   class Link < Element
 
     attr_reader :link, :triplet
@@ -24,6 +24,16 @@ module WikiValidator
       end
 
       return equal
+    end
+
+    def to_markup
+
+      markup = "[#{@content_raw}]"
+      if @subtype == :internal
+        markup = "[#{markup}]"
+      end
+
+      return markup
     end
 
     private

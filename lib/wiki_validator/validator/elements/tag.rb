@@ -22,6 +22,10 @@ module WikiValidator
       return equal
     end
 
+    def to_markup
+      return "<#{@tag}>\n#{@content_raw}\n</#{@tag}>"
+    end
+
     private
 
       def init(params)

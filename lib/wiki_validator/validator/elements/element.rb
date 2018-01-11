@@ -202,6 +202,11 @@ module WikiValidator
       return self.as_json(*options).to_json(*options)
     end
 
+    def to_markup
+      # if it is no TemplateItem, the following fits:
+      return @raw
+    end
+
     private
       # should be overwritten in subclasses instead of the constructor
       def init(params)

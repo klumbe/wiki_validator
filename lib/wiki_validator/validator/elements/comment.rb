@@ -8,6 +8,10 @@ module WikiValidator
     @regex = /<!--\s(?<comments>(.|\s)*?)\s-->\n?/
     @starts_with = /<!--/
 
+    def to_markup
+      return "<!-- #{@content_raw} -->"
+    end
+
     private
 
       def init(params)

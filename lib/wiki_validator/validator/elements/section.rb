@@ -20,6 +20,11 @@ module WikiValidator
       return equal
     end
 
+    def to_markup
+      lev = '='*@level
+      return "#{lev} #{@title} #{lev}"
+    end
+
     private
 
       def init(params)
@@ -34,7 +39,7 @@ module WikiValidator
         else
           # set initial values either from params or default
           # in case the section does not match
-          @level = params.fetch(:level, -1)
+          @level = params.fetch(:level, -1).to_i
           @title = params.fetch(:title, '')
         end
       end

@@ -12,6 +12,17 @@ module WikiValidator
     @regex = /\A(?<open>^\{\|$\n)(?<lines>(^.*?$\n)+)(?<close>^\|\})/
     @starts_with = /^\[\|$\n/
 
+    def to_markup
+      markup = ""
+      rows = ""
+      @rows.each do |row|
+        rows += "|-\n"
+        row.each {|col| rows += "|#{col}\n"}
+      end
+      
+      markup = "{|\n#{rows}\n|}"
+    end
+
     private
 
       def init(params)

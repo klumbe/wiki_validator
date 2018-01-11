@@ -76,6 +76,44 @@ module WikiValidator
       return @validation_item
     end
 
+    def to_markup
+      amount = [@min, 1].max
+      element_str = ''
+      element = nil
+      fill = ''
+      if @collections.include?(@type)
+        # handle collection
+        @children.each do |child|
+          element_str += "\n#{child.to_markup}\n"
+        end
+      else
+        # handle element
+        if @type == :string
+          if !@attribs[:raw].nil?
+            raw = @raw
+          else
+            raw = 'some_string'
+          end
+          element = Element.new(raw, type: @type)
+        elsif @type == :newline
+          raw = "\n"
+          element = Element.new(raw, type: @type)
+        else
+          params = clean_attributes()
+          element_class = Helper.find_element_class(self)
+          element = element_class.new("", params)
+          fill = "\n"
+        end
+        element_str += "#{fill}#{element.to_markup}#{fill}"
+      end
+
+      opening_comment = Helper.create_comment(@type, @min, @max)
+      closing_comment = Comment.new("", content_raw: "/#{@type.upcase} -----").to_markup
+      markup = "#{opening_comment}\n#{element_str*amount}\n#{closing_comment}"
+
+      return markup
+    end
+
     private
 
       def init(params)
