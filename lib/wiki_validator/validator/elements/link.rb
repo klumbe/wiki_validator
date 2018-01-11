@@ -28,8 +28,9 @@ module WikiValidator
 
     def to_markup
 
-      markup = "[#{@content_raw}]"
-      if @subtype == :internal
+      str = create_content_str()
+      markup = "[#{str}]"
+      if @subtype == :internal || @subtype == :triplet
         markup = "[#{markup}]"
       end
 
@@ -50,15 +51,34 @@ module WikiValidator
             @subtype = :external
 
           else
-            triplet = /\A([^:]*?)::(.*)/
-
-            if @link.match(triplet)
-              @subtype = :triplet
-              @triplet = [$1, $2]
-            else
-              @subtype = :internal
-            end
+            match_triplet()
           end
+
+        else
+          @link = params.fetch(:link, '')
+          if @content_raw != '' && @link = ''
+            @link = @content_raw
+          end
+        end
+      end
+
+      def create_content_str
+        str = @content_raw
+        if str == ''
+          str = Comment.new('', content_raw: "put #{@subtype} link here").to_markup
+        end
+
+        return str
+      end
+
+      def match_triplet
+        triplet = /\A([^:]*?)::(.*)/
+
+        if @link.match(triplet)
+          @subtype = :triplet
+          @triplet = [$1, $2]
+        else
+          @subtype = :internal
         end
       end
   end

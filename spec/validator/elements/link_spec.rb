@@ -129,4 +129,58 @@ describe WikiValidator::Link do
       expect(validation_item.errors.size).to be > 0
     end
   end
+
+  describe '#to_markup' do
+
+    context 'is external link' do
+      it 'returns an external link' do
+        link = Link.new('[external_link]')
+        markup = link.to_markup
+        expect(markup).to be_an_instance_of(String)
+        expect(markup).to eq('[external_link]')
+      end
+    end
+
+    context 'is internal link or triplet' do
+      it 'returns an internal link or triplet' do
+        str_int = '[[internal_link]]'
+        str_trip = '[[Trip::let]]'
+        link_int = Link.new(str_int)
+        link_trip = Link.new(str_trip)
+        markup_int = link_int.to_markup
+        markup_trip = link_trip.to_markup
+        expect(markup_int).to eq(str_int)
+        expect(markup_trip).to eq(str_trip)
+      end
+    end
+
+    context 'Link is created by params' do
+      it 'returns the correct string' do
+        str_int = 'link_internal'
+        str_ext = 'link external'
+        str_trip = 'Tri::p:let'
+        link_int = Link.new('', subtype: :internal, content_raw: str_int)
+        link_ext = Link.new('', subtype: :external, content_raw: str_ext)
+        link_trip = Link.new('', subtype: :triplet, content_raw: str_trip)
+        markup_int = link_int.to_markup
+        markup_ext = link_ext.to_markup
+        markup_trip = link_trip.to_markup
+        expect(markup_int).to eq("[[#{str_int}]]")
+        expect(markup_ext).to eq("[#{str_ext}]")
+        expect(markup_trip).to eq("[[#{str_trip}]]")
+      end
+
+      it 'returns a placeholder if it has been initialized without any string' do
+        link_int = Link.new('', subtype: :internal)
+        link_ext = Link.new('', subtype: :external)
+        link_trip = Link.new('', subtype: :triplet)
+        markup_int = link_int.to_markup
+        markup_ext = link_ext.to_markup
+        markup_trip = link_trip.to_markup
+        expect(markup_int).to eq('[[<!--put internal link here-->]]')
+        expect(markup_ext).to eq('[<!--put external link here-->]')
+        expect(markup_trip).to eq('[[<!--put triplet link here-->]]')
+      end
+    end
+  end
 end
