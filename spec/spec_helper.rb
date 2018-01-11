@@ -8,6 +8,7 @@ Constants = WikiValidator::Constants
 Attribute = WikiValidator::Attribute
 Comment = WikiValidator::Comment
 Element = WikiValidator::Element
+Helper = WikiValidator::Helper
 Link = WikiValidator::Link
 List = WikiValidator::List
 Section = WikiValidator::Section

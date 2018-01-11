@@ -101,7 +101,13 @@ module WikiValidator
         else
           params = clean_attributes()
           element_class = Helper.find_element_class(self)
-          element = element_class.new("", params)
+          if element_class.nil?
+            # not a valid TemplateItem type
+            str = "#{@type.upcase} is a invalid element type.\n Check template."
+            element = Comment.new('', content_raw: str)
+          else
+            element = element_class.new("", params)
+          end
           fill = "\n"
         end
         element_str += "#{fill}#{element.to_markup}#{fill}"
@@ -142,7 +148,7 @@ module WikiValidator
 
         if !match.nil?
           if !match[:type].nil? && @type == :undefined
-            @type = match[:type].to_sym
+            @type = match[:type].downcase.to_sym
           end
 
           set_body(match)
@@ -215,7 +221,8 @@ module WikiValidator
       def min_max_to_i(str)
         int = -1
         if str != '?'
-          int = str.to_i
+          # make sure it is a int and not smaller than -1
+          int = [str.to_i, -1].max
         end
         return int
       end
