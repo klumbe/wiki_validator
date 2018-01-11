@@ -294,4 +294,14 @@ describe WikiValidator::Element do
     end
 
   end
+
+  describe '#to_markup' do
+    context 'element is string or newline' do
+      it 'returns the string' do
+        element = Element.new('string', type: :string)
+        markup = element.to_markup
+        expect(markup).to eq('string')
+      end
+    end
+  end
 end
