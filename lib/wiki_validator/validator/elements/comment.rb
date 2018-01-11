@@ -5,11 +5,11 @@ module WikiValidator
 
   class Comment < Element
 
-    @regex = /<!--\s(?<comments>(.|\s)*?)\s-->\n?/
+    @regex = /<!--(?<comments>(.|\s)*?)-->\n?/
     @starts_with = /<!--/
 
     def to_markup
-      return "<!-- #{@content_raw} -->"
+      return "<!--#{@content_raw}-->"
     end
 
     private
