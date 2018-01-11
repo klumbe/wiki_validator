@@ -23,7 +23,9 @@ module WikiValidator
     end
 
     def to_markup
-      return "<#{@tag}>\n#{@content_raw}\n</#{@tag}>"
+      attr_str = @attribs.reduce("") {|a| " #{a.to_s}"}
+
+      return "<#{@tag}#{@attr_str}>\n#{@content_raw}\n</#{@tag}>"
     end
 
     private
