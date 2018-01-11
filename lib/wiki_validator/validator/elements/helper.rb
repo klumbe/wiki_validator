@@ -28,13 +28,13 @@ module WikiValidator
       when min == -1 && max == -1
         comment_str += "is optional and can appear as often as one likes."
       when min == -1 && max != -1
-        comment_str += "must not appear more often than #{max} times."
+        comment_str += "must not appear more often than #{max} time(s)."
       when min != -1 && max == -1
-        comment_str += "has to exist at least #{min} times."
+        comment_str += "has to exist at least #{min} time(s)."
       when min != -1 && max != -1 && min == max
-        comment_str += "has to exist exactly #{min} times."
+        comment_str += "has to exist exactly #{min} time(s)."
       when min != -1 && max != -1
-        comment_str += "has to exist between #{min} and #{max} times."
+        comment_str += "has to exist between #{min} and #{max} time(s)."
       end
 
       comment = Comment.new("", content_raw: comment_str)

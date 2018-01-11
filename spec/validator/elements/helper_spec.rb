@@ -67,7 +67,7 @@ describe WikiValidator::Helper do
         context 'upper bound set' do
           it 'returns a comment stating that it must not exist more than the bound' do
             str = Helper.create_comment(:type, -1, 5)
-            expect(str).to eq('<!--TYPE must not appear more often than 5 times.-->')
+            expect(str).to eq('<!--TYPE must not appear more often than 5 time(s).-->')
           end
         end
       end
@@ -76,21 +76,21 @@ describe WikiValidator::Helper do
         context 'no upper bound set' do
           it 'returns a comment stating that it have to exist at least max times' do
             str = Helper.create_comment(:type, 3, -1)
-            expect(str).to eq('<!--TYPE has to exist at least 3 times.-->')
+            expect(str).to eq('<!--TYPE has to exist at least 3 time(s).-->')
           end
         end
 
         context 'upper bound set' do
           it 'returns a comment stating that it has upper and lower bounds' do
             str = Helper.create_comment(:type, 2, 5)
-            expect(str).to eq('<!--TYPE has to exist between 2 and 5 times.-->')
+            expect(str).to eq('<!--TYPE has to exist between 2 and 5 time(s).-->')
           end
         end
 
         context 'upper bound equals lower bound' do
           it 'returns a comment stating that it has to exist exactly x times' do
             str = Helper.create_comment(:type, 4, 4)
-            expect(str).to eq('<!--TYPE has to exist exactly 4 times.-->')
+            expect(str).to eq('<!--TYPE has to exist exactly 4 time(s).-->')
           end
         end
       end

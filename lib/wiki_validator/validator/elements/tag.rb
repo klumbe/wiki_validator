@@ -24,8 +24,11 @@ module WikiValidator
 
     def to_markup
       attr_str = @attribs.reduce("") {|a| " #{a.to_s}"}
-
-      return "<#{@tag}#{@attr_str}>\n#{@content_raw}\n</#{@tag}>"
+      tag = @tag
+      if tag == ''
+        tag = Comment.new('', content_raw: 'tag-type').to_markup
+      end
+      return "<#{tag}#{@attr_str}>\n#{@content_raw}\n</#{tag}>"
     end
 
     private

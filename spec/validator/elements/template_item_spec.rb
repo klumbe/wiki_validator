@@ -372,15 +372,15 @@ describe WikiValidator::TemplateItem do
         element = TemplateItem.new(str)
         element.add_child(TemplateItem.new('#string[5]'))
         markup = element.to_markup
-        result = "<!--SECTION has to exist between 2 and 3 times.-->\n\n"\
+        result = "<!--SECTION has to exist between 2 and 3 time(s).-->\n\n"\
                   "<!--Change section level as needed:-->\n"\
                   "=<!--Put your section title here.-->=\n\n"\
-                  "<!--STRING has to exist at least 5 times.-->\n"\
+                  "<!--STRING has to exist at least 5 time(s).-->\n"\
                   "some_string some_string some_string some_string some_string \n"\
                   "<!--/STRING ------->\n\n"\
                   "<!--Change section level as needed:-->\n"\
                   "=<!--Put your section title here.-->=\n\n"\
-                  "<!--STRING has to exist at least 5 times.-->\n"\
+                  "<!--STRING has to exist at least 5 time(s).-->\n"\
                   "some_string some_string some_string some_string some_string \n"\
                   "<!--/STRING ------->\n\n"\
                   "<!--/SECTION ------->"
