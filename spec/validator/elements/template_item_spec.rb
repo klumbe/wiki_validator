@@ -399,6 +399,7 @@ describe WikiValidator::TemplateItem do
                 "[<!--put undefined link here-->]\n\n"\
                 "<!--/LINK ------->\n\n"\
                 "<!--/ANY ------->"
+          expect(markup).to eq(str)
         end
       end
     end

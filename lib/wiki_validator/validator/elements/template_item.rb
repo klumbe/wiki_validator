@@ -594,7 +594,6 @@ module WikiValidator
           case @type
           when :any
             str = 'Any element can be picket and (within the bounds) exist multiple times.'
-            str = 'Every item can (within the bounds) be used multiple times.\n'
           when :order
             str = 'Every item needs to appear in the correct order.'
             if @attribs[:strict] == true
