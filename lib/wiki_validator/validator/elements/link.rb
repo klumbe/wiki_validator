@@ -56,7 +56,7 @@ module WikiValidator
 
         else
           @link = params.fetch(:link, '')
-          if @content_raw != '' && @link = ''
+          if @content_raw != '' && @link == ''
             @link = @content_raw
           end
         end
