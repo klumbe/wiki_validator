@@ -5,49 +5,49 @@ describe WikiValidator::Helper do
     describe 'self#find_element_class' do
       it 'takes a template_item of type comment and returns nil' do
         # Comment is ignored and can't be checked then -> can be added anytime
-        ti = TemplateItem.new('#comment')
+        ti = TemplateItem.new('+comment')
         clss = Helper.find_element_class(ti)
         expect(clss).to be_nil
       end
 
       it 'takes a TemplateItem of type string Element' do
-        ti = TemplateItem.new('#string')
+        ti = TemplateItem.new('+string')
         clss = Helper.find_element_class(ti)
         expect(clss).to eq(Element)
       end
 
       it 'takes a TemplateItem of type newline and returns Element' do
-        ti = TemplateItem.new('#newline')
+        ti = TemplateItem.new('+newline')
         clss = Helper.find_element_class(ti)
         expect(clss).to eq(Element)
       end
 
       it 'takes a TemplateItem of type link and returns Link' do
-        ti = TemplateItem.new('#link')
+        ti = TemplateItem.new('+link')
         clss = Helper.find_element_class(ti)
         expect(clss).to eq(Link)
       end
 
       it 'takes a TemplateItem of type list and returns List' do
-        ti = TemplateItem.new('#list')
+        ti = TemplateItem.new('+list')
         clss = Helper.find_element_class(ti)
         expect(clss).to eq(List)
       end
 
       it 'takes a TemplateItem of type section and returns Section' do
-        ti = TemplateItem.new('#section')
+        ti = TemplateItem.new('+section')
         clss = Helper.find_element_class(ti)
         expect(clss).to eq(Section)
       end
 
       it 'takes a TemplateItem of type table and returns Table' do
-        ti = TemplateItem.new('#table')
+        ti = TemplateItem.new('+table')
         clss = Helper.find_element_class(ti)
         expect(clss).to eq(Table)
       end
 
       it 'takes a TemplateItem of type tag and returns Tag' do
-        ti = TemplateItem.new('#tag')
+        ti = TemplateItem.new('+tag')
         clss = Helper.find_element_class(ti)
         expect(clss).to eq(Tag)
       end

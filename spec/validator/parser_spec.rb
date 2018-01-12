@@ -48,6 +48,9 @@ describe WikiValidator::Parser do
       num_found = Hash.new(0)
       elements.each do |el|
         num_found[el.type] += 1
+        if el.type == :link
+          STDERR.puts el.raw
+        end
       end
       string = num_found[:string]
       new_line = num_found[:newline]
@@ -59,13 +62,14 @@ describe WikiValidator::Parser do
       tag = num_found[:tag]
       template_item = num_found[:template_item]
 
-      # TemplateItem should be recognized as list, strings and so on
+      # TemplateItem should be recognized as strings, links and so on
       expect(template_item).to eq(0)
       expect(new_line).to eq(0)
       # comment is on the ignore list
       expect(comment).to eq(0)
-      expect(link).to eq(3)
-      expect(list).to eq(25)
+      # 3 real links and 4 from the parameters of a TemplateItem
+      expect(link).to eq(7)
+      expect(list).to eq(12)
       expect(section).to eq(12)
       expect(table).to eq(1)
       expect(tag).to eq(3)

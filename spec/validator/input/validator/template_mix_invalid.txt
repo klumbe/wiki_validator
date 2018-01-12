@@ -1,21 +1,21 @@
-#order[1, 1]{
++order[1, 1]{
   |strict: true
 
-  #section[1, 1]{
+  +section[1, 1]{
     |level: 2
     |title: Heading 1
 
-    #order{
+    +order{
       == Subheading 1 ==
       == Subheading 2 ==
     }
   }
 
-  #section[1, 1]{
+  +section[1, 1]{
     |level: 1
     |title: Heading 2
 
-    #link[4]
+    +link[4]
   }
 
   = Heading 3 =

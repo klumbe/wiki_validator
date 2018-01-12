@@ -15,7 +15,7 @@ module WikiValidator
     @re_params = /(?<params>\[[ ]*((?<amount>\d+|\?)|(#{@re_min_max}))[ ]*\])/
     @re_add_params = /(?<params_add>\(([ ]|\S)*\))/
 
-    @starts_with = /#/
+    @starts_with = /\+/
     @regex = /(?<regex>#{@starts_with}#{@re_type}(#{@re_params})?([ ]*#{@re_add_params}[ ]*)?([ ]*|\n)?(?<body>(\{\n([^{}]|\g<body>)*\}))?($|;))/
 
     # overwrite method to allow splitting into attributes and children

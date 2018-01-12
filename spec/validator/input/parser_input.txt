@@ -48,25 +48,25 @@ These are test strings.
 A new line is added, to.
 
 = TemplateItem =
-#section
-#section[1,2]
-#section[2]
-#section[?, 3]
-#section[2, ?]
-#section{
++section
++section[1,2]
++section[2]
++section[?, 3]
++section[2, ?]
++section{
   |title: TestTitle
-  #child
+  +child
 }
-#any{
-  #section
-  #string
++any{
+  +section
+  +string
 }
-#order{
-  #section{
++order{
+  +section{
     |title: First Section
     |level: 2
   }
-  #section{
+  +section{
     |title: Second Section
   }
 }
