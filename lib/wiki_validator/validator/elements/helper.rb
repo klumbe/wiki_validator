@@ -42,6 +42,36 @@ module WikiValidator
       return comment.to_markup
     end
 
+    # depth first search algorithm for traversing a list of elements
+    # takes a block to be able to handle each element
+    def self.dfs(elements)
+      if elements.instance_of?(Array)
+        # reverse elements to be able to use concat later
+        frontier = elements.reverse
+        visited = []
+
+        while !frontier.empty?
+          element = frontier.pop
+
+          # don't check any element twice
+          if !visited.include?(element)
+
+            yield(element)
+
+            if !element.content.nil? && !element.content.empty?
+              frontier.concat(element.content.reverse)
+            end
+
+            if !element.children.nil? && !element.children.empty?
+              frontier.concat(element.children.reverse)
+            end
+
+            visited << element
+          end
+        end
+      end
+    end
+
   end
 
 end

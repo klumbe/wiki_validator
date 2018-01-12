@@ -383,7 +383,7 @@ module WikiValidator
       end
 
       def validate_element(elements)
-        # find all elements with matching type (DFS)
+        # find all elements with matching type
         candidates = find_candidates(elements)
 
         # clean attributes
@@ -398,33 +398,17 @@ module WikiValidator
         return candidates
       end
 
-      # returns all elements that have the same type (DFS-algorithm)
+      # returns all elements that have the same type
       def find_candidates(elements)
+
         candidates = []
-        frontier = elements.reverse
-        visited = []
 
-        while !frontier.empty?
-          element = frontier.pop
-
-          # don't check any element twice
-          if !visited.include?(element)
-            if element.type == @type
-              candidate = ValidationItem.new(self)
-              candidate.add_valid_element(element)
-              candidates << candidate
-            end
-
-            if !element.content.empty?
-              frontier.concat(element.content)
-            end
-
-            #if element.type == :section && !element.attributes[:children].empty?
-            if !element.attributes[:children].nil? && !element.attributes[:children].empty?
-              frontier.concat(element.attributes[:children])
-            end
-
-            visited << element
+        # run DFS to check each element
+        Helper.dfs(elements) do |element|
+          if element.type == @type
+            candidate = ValidationItem.new(self)
+            candidate.add_valid_element(element)
+            candidates << candidate
           end
         end
 

@@ -68,24 +68,12 @@ module WikiValidator
     # finds all triplets used to specify the applied templates
     def extract_template_names
       templates = []
-      frontier = @page.ast.reverse
-      visited = []
 
-      while !frontier.empty?
-        element = frontier.pop
-
-        if !visited.include?(element)
-
-          if element.type == :link && element.subtype == :triplet
-            if element.triplet.first.match(TEMPLATE_IDENTIFIER)
-              templates << element.triplet.last.strip
-            end
+      Helper.dfs(@page.ast) do |element|
+        if element.type == :link && element.subtype == :triplet
+          if element.triplet.first.match(TEMPLATE_IDENTIFIER)
+            templates << element.triplet.last.strip
           end
-
-          frontier.concat(element.content)
-          frontier.concat(element.children)
-
-          visited << element
         end
       end
 
