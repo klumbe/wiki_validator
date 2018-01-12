@@ -15,6 +15,7 @@ module WikiValidator
                            'page_name',
                            'page_namespace',
                         ]
+    TEMPLATE_IDENTIFIER = /validatedBy/i
 
     def initialize(params = {})
       @parameter = params
@@ -76,15 +77,15 @@ module WikiValidator
         if !visited.include?(element)
 
           if element.type == :link && element.subtype == :triplet
-            if element.triplets.first =~ /validatedBy/i
-              @templates << element.triplets.last.split
+            if element.triplet.first.match(TEMPLATE_IDENTIFIER)
+              templates << element.triplet.last.strip
             end
           end
 
           frontier.concat(element.content)
           frontier.concat(element.children)
 
-          visted << element
+          visited << element
         end
       end
 
