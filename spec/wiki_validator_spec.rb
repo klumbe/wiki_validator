@@ -99,6 +99,10 @@ RSpec.describe WikiValidator do
       end
     end
 
+    describe '#extract_template_names' do
+
+    end
+
     describe '#generate_page' do
       it 'takes a template, a page and returns a new PageDTO with markup' do
         template_file = File.read(File.dirname(__FILE__) + "/input/template_mix.txt")
@@ -112,6 +116,8 @@ RSpec.describe WikiValidator do
       end
     end
 
-    describe '#validate'
+    describe '#validate' do
+
+    end
   end
 end

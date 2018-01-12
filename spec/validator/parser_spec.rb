@@ -48,9 +48,6 @@ describe WikiValidator::Parser do
       num_found = Hash.new(0)
       elements.each do |el|
         num_found[el.type] += 1
-        if el.type == :link
-          STDERR.puts el.raw
-        end
       end
       string = num_found[:string]
       new_line = num_found[:newline]

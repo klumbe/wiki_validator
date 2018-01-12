@@ -64,6 +64,33 @@ module WikiValidator
       return template_dto
     end
 
+    # finds all triplets used to specify the applied templates
+    def extract_template_names
+      templates = []
+      frontier = @page.ast.reverse
+      visited = []
+
+      while !frontier.empty?
+        element = frontier.pop
+
+        if !visited.include?(element)
+
+          if element.type == :link && element.subtype == :triplet
+            if element.triplets.first =~ /validatedBy/i
+              @templates << element.triplets.last.split
+            end
+          end
+
+          frontier.concat(element.content)
+          frontier.concat(element.children)
+
+          visted << element
+        end
+      end
+
+      return templates
+    end
+
     # generates a page from a given template and
     # the parameters of the page that needs to be generated (encapsulated in a PageDTO)
     def generate_page(template_dto, page_dto)
@@ -104,7 +131,7 @@ module WikiValidator
             'template_name' => template_dto.name,
             'template_namespace' => template_dto.namespace,
             'page_name' => page_dto.name,
-            'page_name' => page_dto.namespace,
+            'page_namespace' => page_dto.namespace,
         }
 
         return variables
