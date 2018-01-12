@@ -10,7 +10,7 @@ module WikiValidator
     # attributes not used for comparing elements
     SPECIAL_ATTRIBUTES = [:min, :max, :amount, :strict]
 
-    @re_type = /(?<type>[a-z]+)/
+    @re_type = /(?<type>[a-z]+(_[a-z]+)?)/
     @re_min_max = /(?<min>\d+|\?)[ ]*,[ ]*(?<max>\d+|\?)/
     @re_params = /(?<params>\[[ ]*((?<amount>\d+|\?)|(#{@re_min_max}))[ ]*\])/
     @re_add_params = /(?<params_add>\(([ ]|\S)*\))/
