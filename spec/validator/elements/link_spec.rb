@@ -177,9 +177,9 @@ describe WikiValidator::Link do
         markup_int = link_int.to_markup
         markup_ext = link_ext.to_markup
         markup_trip = link_trip.to_markup
-        expect(markup_int).to eq('[[<!--put internal link here-->]]')
-        expect(markup_ext).to eq('[<!--put external link here-->]')
-        expect(markup_trip).to eq('[[<!--put triplet link here-->]]')
+        expect(markup_int).to eq('[[<!--Put internal link here-->]]')
+        expect(markup_ext).to eq('[<!--Put external link here-->]')
+        expect(markup_trip).to eq('[[<!--Put triplet link here-->]]')
       end
     end
   end

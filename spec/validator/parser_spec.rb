@@ -4,7 +4,7 @@ describe WikiValidator::Parser do
 
   before :all do
     @parser = Parser.new
-    @input_string = File.read(File.dirname(__FILE__) +"/input/parser_input.txt")
+    @input_string = File.read(File.dirname(__FILE__) + "/input/parser_input.txt")
   end
 
   describe '#parse_content' do

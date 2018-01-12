@@ -31,12 +31,13 @@ module WikiValidator
   		# generate a uuid if no id is provided
   		@id = params.fetch(:id, SecureRandom.uuid)
       @raw = raw
-      @type = params.fetch(:type, :undefined)
-  		@subtype = params.fetch(:subtype, :undefined)
+      @type = params.fetch(:type, :undefined).downcase.to_sym
+  		@subtype = params.fetch(:subtype, :undefined).downcase.to_sym
       @line_number = params.fetch(:line_number, -1)
       @content_raw = params.fetch(:content_raw, "")
       @content = params.fetch(:content, [])
   		@children = params.fetch(:children, [])
+      rectify_params()
       init(params)
     end
 
@@ -208,6 +209,25 @@ module WikiValidator
     end
 
     private
+
+      def rectify_params
+        if @line_number.instance_of?(String)
+          if @line_number.strip.match(/\A[-+]\d+\z/)
+            @line_number = @line_number.to_i
+          else
+            @line_number = -1
+          end
+        end
+
+        if !@content.instance_of?(Array)
+          @content = []
+        end
+
+        if !@children.instance_of?(Array)
+          @children = []
+        end
+      end
+
       # should be overwritten in subclasses instead of the constructor
       def init(params)
       end

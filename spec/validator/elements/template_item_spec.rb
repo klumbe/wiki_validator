@@ -372,7 +372,7 @@ describe WikiValidator::TemplateItem do
                 "=<!--Put your section title here.-->=\n\n"\
                 "<!--/SECTION ------->\n\n"\
                 "<!--LINK has to exist at least 1 time(s).-->\n"\
-                "[<!--put undefined link here-->]\n\n"\
+                "[<!--Put undefined link here-->]\n\n"\
                 "<!--/LINK ------->\n\n"\
                 "<!--/ORDER ------->"
           expect(markup).to eq(str)
@@ -396,7 +396,7 @@ describe WikiValidator::TemplateItem do
                 "=<!--Put your section title here.-->=\n\n"\
                 "<!--/SECTION ------->\n\n"\
                 "<!--LINK has to exist at least 1 time(s).-->\n"\
-                "[<!--put undefined link here-->]\n\n"\
+                "[<!--Put undefined link here-->]\n\n"\
                 "<!--/LINK ------->\n\n"\
                 "<!--/ANY ------->"
           expect(markup).to eq(str)
@@ -410,7 +410,7 @@ describe WikiValidator::TemplateItem do
         element = TemplateItem.new(str)
         element.add_child(TemplateItem.new('+string[5]'))
         markup = element.to_markup
-        result = "<!--SECTION has to exist between 2 and 3 time(s).-->\n"\
+        result = "<!--SECTION has to exist between 2 and 3 times.-->\n"\
                   "<!--Change section level as needed:-->\n"\
                   "=<!--Put your section title here.-->=\n\n"\
                   "<!--STRING has to exist at least 5 time(s).-->\n"\

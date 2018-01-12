@@ -1,0 +1,32 @@
+<!--ORDER has to exist between 1 and 2 times.-->
+<!--Every item needs to appear in the correct order.
+STRICT mode: No other elements are allowed between them.-->
+<!--SECTION has to exist at least 2 time(s).-->
+<!--Change section level as needed:-->
+=<!--Put your section title here.-->=
+<!--Change section level as needed:-->
+=<!--Put your section title here.-->=
+
+<!--/SECTION ------->
+
+specific
+
+string
+
+<!--STRING has to exist between 2 and 3 times.-->
+some_string some_string 
+<!--/STRING ------->
+
+<!--SECTION has to exist at least 2 time(s).-->
+==<!--Put your section title here.-->==
+==<!--Put your section title here.-->==
+
+<!--/SECTION ------->
+
+<!--/ORDER ------->
+<!--LINK has to exist at least 3 time(s).-->
+[[<!--Put triplet link here-->]]
+[[<!--Put triplet link here-->]]
+[[<!--Put triplet link here-->]]
+
+<!--/LINK ------->

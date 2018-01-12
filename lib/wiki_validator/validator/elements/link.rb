@@ -65,7 +65,7 @@ module WikiValidator
       def create_content_str
         str = @content_raw
         if str == ''
-          str = Comment.new('', content_raw: "put #{@subtype} link here").to_markup
+          str = Comment.new('', content_raw: "Put #{@subtype} link here").to_markup
         end
 
         return str

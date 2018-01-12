@@ -83,7 +83,7 @@ describe WikiValidator::Helper do
         context 'upper bound set' do
           it 'returns a comment stating that it has upper and lower bounds' do
             str = Helper.create_comment(:type, 2, 5)
-            expect(str).to eq('<!--TYPE has to exist between 2 and 5 time(s).-->')
+            expect(str).to eq('<!--TYPE has to exist between 2 and 5 times.-->')
           end
         end
 

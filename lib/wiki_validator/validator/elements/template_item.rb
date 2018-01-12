@@ -596,7 +596,7 @@ module WikiValidator
             str = 'Any element can be picket and (within the bounds) exist multiple times.'
           when :order
             str = 'Every item needs to appear in the correct order.'
-            if @attribs[:strict] == true
+            if @attribs[:strict].to_s == true.to_s
               str += "\nSTRICT mode: No other elements are allowed between them."
             end
           end

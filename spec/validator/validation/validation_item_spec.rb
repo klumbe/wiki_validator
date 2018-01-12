@@ -3,13 +3,13 @@ require 'spec_helper'
 describe WikiValidator::ValidationItem do
 
   before :each do
-    @template_item = TemplateItem.new("#string")
+    @template_item = TemplateItem.new("+string")
     @validation_item = ValidationItem.new(@template_item)
   end
 
   describe '#new' do
     it 'takes a TemplateItem as parameter and returns ValidationItem' do
-      template_item = TemplateItem.new('#section')
+      template_item = TemplateItem.new('+section')
       val_item = ValidationItem.new(template_item)
       expect(val_item).to be_an_instance_of(ValidationItem)
       expect(val_item.template_item).to eq(template_item)

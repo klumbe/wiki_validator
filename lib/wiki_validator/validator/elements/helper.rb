@@ -34,7 +34,7 @@ module WikiValidator
       when min != -1 && max != -1 && min == max
         comment_str += "has to exist exactly #{min} time(s)."
       when min != -1 && max != -1
-        comment_str += "has to exist between #{min} and #{max} time(s)."
+        comment_str += "has to exist between #{min} and #{max} times."
       end
 
       comment = Comment.new("", content_raw: comment_str)
