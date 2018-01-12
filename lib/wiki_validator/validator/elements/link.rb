@@ -4,12 +4,15 @@ module WikiValidator
 
   class Link < Element
 
-    attr_reader :link, :triplet
+    attr_reader :link, :triplet, :relation, :namespace, :page
+
+    class << self; attr_reader :regex_triplet end
 
     external = /(?<lb>\[)(?<link>[^\]$]*)(?<rb>\])/
     internal = /(?<lb>\[{2})(?<link>[^\]$]*)(?<rb>\]{2})/
     @regex = /\A#{internal}|#{external}/
     @starts_with = /\[/
+    @regex_triplet = /\A([^:]+?)::([^:]+):([^:\s]+)/
 
     #override method to do nothing
     def parse_content_raw(content_parser); end
@@ -55,10 +58,7 @@ module WikiValidator
           end
 
         else
-          @link = params.fetch(:link, '')
-          if @content_raw != '' && @link == ''
-            @link = @content_raw
-          end
+          set_params(params)
         end
       end
 
@@ -72,13 +72,26 @@ module WikiValidator
       end
 
       def match_triplet
-        triplet = /\A([^:]*?)::(.*)/
-
-        if @link.match(triplet)
+        if @link.match(self.class.regex_triplet)
           @subtype = :triplet
-          @triplet = [$1, $2]
+          @relation = $1
+          @namespace = $2
+          @page = $3
+          @triplet = [$1, $2, $3]
         else
           @subtype = :internal
+        end
+      end
+
+      def set_params(params)
+        @link = params.fetch(:link, '')
+        @triplet = params.fetch(:triplet, nil)
+        @relation = params.fetch(:relation, nil)
+        @namespace = params.fetch(:namespace, nil)
+        @page = params.fetch(:page, nil)
+
+        if @content_raw != '' && @link == ''
+          @link = @content_raw
         end
       end
   end

@@ -5,7 +5,7 @@ describe WikiValidator::Link do
   before :all do
     @link_external = "[https://google.com]"
     @link_internal = "[[link_to_page]]"
-    @triplet = "[[validated_by::Template1]]"
+    @triplet = "[[validated_by::Validation:Template1]]"
   end
 
   describe '#new' do
@@ -41,27 +41,30 @@ describe WikiValidator::Link do
       expect(link).to be_an_instance_of(Link)
       expect(link.type).to eq(:link)
       expect(link.subtype).to eq(:triplet)
-      expect(link.content_raw).to eq("validated_by::Template1")
-      expect(link.link).to eq("validated_by::Template1")
+      str = 'validated_by::Validation:Template1'
+      expect(link.content_raw).to eq(str)
+      expect(link.link).to eq(str)
       expect(link.triplet).not_to be_nil
-      expect(link.triplet.size).to be(2)
-      expect(link.triplet.first).to eq("validated_by")
-      expect(link.triplet.last).to eq("Template1")
+      expect(link.triplet.size).to be(3)
+      expect(link.relation).to eq('validated_by')
+      expect(link.namespace).to eq('Validation')
+      expect(link.page).to eq('Template1')
     end
   end
 
   describe '#attributes' do
 
     it 'returns all instance variables' do
-      link = Link.new('[[trip::let]]')
+      link = Link.new('[[trip::let:abc]]')
       attributes = link.attributes
       expect(attributes).to be_an_instance_of(Hash)
-      expect(attributes.size).to eq(10)
-      expect(attributes[:link]).to eq('trip::let')
+      expect(attributes.size).to eq(13)
+      expect(attributes[:link]).to eq('trip::let:abc')
       expect(attributes[:triplet]).to be_an_instance_of(Array)
-      expect(attributes[:triplet].size).to eq(2)
-      expect(attributes[:triplet].first).to eq('trip')
-      expect(attributes[:triplet].last).to eq('let')
+      expect(attributes[:triplet].size).to eq(3)
+      expect(attributes[:relation]).to eq('trip')
+      expect(attributes[:namespace]).to eq('let')
+      expect(attributes[:page]).to eq('abc')
     end
   end
 
@@ -71,7 +74,7 @@ describe WikiValidator::Link do
       @link1 = Link.new('[[Link1]]')
       @link2 = Link.new('[Link1]')
       @link3 = Link.new('[[Link3]]')
-      @link4 = Link.new('[[trip:let]]')
+      @link4 = Link.new('[[trip:let:abc]]')
       @link5 = Link.new('[[Link1]]')
     end
 
@@ -144,7 +147,7 @@ describe WikiValidator::Link do
     context 'is internal link or triplet' do
       it 'returns an internal link or triplet' do
         str_int = '[[internal_link]]'
-        str_trip = '[[Trip::let]]'
+        str_trip = '[[Trip::let:abc]]'
         link_int = Link.new(str_int)
         link_trip = Link.new(str_trip)
         markup_int = link_int.to_markup

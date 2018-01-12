@@ -104,8 +104,8 @@ RSpec.describe WikiValidator do
         str = "# abc\n"\
               "== Metadata ==\n"\
               "# [[Other::Triplet]]\n"\
-              "# [[validatedBy::Template1]]\n"\
-              "# [[validatedby::Template2]]"
+              "# [[validatedBy::Validation:Template1]]\n"\
+              "# [[validatedby::Validation:Template2]]"
         page_dto = PageDTO.new('name', 'namespace', str)
         @wiki_validator.set_page(page_dto)
         expect(page_dto.ast.size).to be > 0
@@ -113,8 +113,8 @@ RSpec.describe WikiValidator do
 
         expect(templates).to be_an_instance_of(Array)
         expect(templates.size).to eq(2)
-        expect(templates.include?('Template1')).to eq(true)
-        expect(templates.include?('Template2')).to eq(true)
+        expect(templates.include?('Validation:Template1')).to eq(true)
+        expect(templates.include?('Validation:Template2')).to eq(true)
       end
     end
 

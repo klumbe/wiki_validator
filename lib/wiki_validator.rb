@@ -72,7 +72,8 @@ module WikiValidator
       Helper.dfs(@page.ast) do |element|
         if element.type == :link && element.subtype == :triplet
           if element.triplet.first.match(TEMPLATE_IDENTIFIER)
-            templates << element.triplet.last.strip
+            triplet = element.triplet
+            templates << "#{triplet[1]}:#{triplet[2]}"
           end
         end
       end

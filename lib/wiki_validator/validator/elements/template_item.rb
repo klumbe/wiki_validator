@@ -10,7 +10,7 @@ module WikiValidator
     # attributes not used for comparing elements
     SPECIAL_ATTRIBUTES = [:min, :max, :amount, :strict]
 
-    @re_type = /(?<type>[a-z]+(_[a-z]+)?)/
+    @re_type = /(?<type>[a-z]+(_(?<subtype>([a-z]+)))?)/
     @re_min_max = /(?<min>\d+|\?)[ ]*,[ ]*(?<max>\d+|\?)/
     @re_params = /(?<params>\[[ ]*((?<amount>\d+|\?)|(#{@re_min_max}))[ ]*\])/
     @re_add_params = /(?<params_add>\(([ ]|\S)*\))/
@@ -126,7 +126,11 @@ module WikiValidator
 
         if !match.nil?
           if !match[:type].nil? && @type == :undefined
-            @type = match[:type].downcase.to_sym
+            @type = match[:type].to_sym
+          end
+
+          if !match[:subtype].nil? && @subtype == :undefined
+            @subtype = match[:subtype].to_sym
           end
 
           set_body(match)
