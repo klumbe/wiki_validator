@@ -1,0 +1,21 @@
++section
++section[1,2]
++section[2]
++section[?, 3]
++section[2, ?]
++section{
+  |title: TestTitle
+  +child
++any{
+  +section
+  +string
+}
++order{
+  +section{
+    |title: First Section
+    |level: 2
+  }
+  +section{
+    |title: Second Section
+  }
+}

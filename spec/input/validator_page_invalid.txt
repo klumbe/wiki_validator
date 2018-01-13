@@ -1,0 +1,17 @@
+== Headline ==
+This is some content.
+== Characteristics ==
+Let's explain what it does.
+=== Maybe some subsection ==
+With other stuff.
+
+== Architecture ==
+Some stuff about the Architecture.
+
+== Metadata ==
+[[uses::Language:Something]]
+[[uses::Language:Haskell]]
+[[uses::Technology:SomeTechnology]]
+[[uses::Feature:SomeFeature]]
+[https://someexternal.stuff/here]
+[[validatedBy::Validation:Contribution]]

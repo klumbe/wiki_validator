@@ -1,0 +1,13 @@
++order[1, 2]{
+  |strict: true
+  +section[2]
+  specific string
+  +string[2, 3]
+  +section[2]{
+    |level: 2
+  }
+}
+
++link[3]{
+  |subtype: triplet
+}

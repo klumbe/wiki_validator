@@ -10,7 +10,9 @@ Gem::Specification.new do |spec|
   spec.email         = ["muellerc@uni-koblenz.de"]
 
   spec.summary       = %q{Validates a 101wiki page against a template.}
-  spec.description   = %q{Contains a parser to read a 101wiki page and create an abstract systax tree. A validator can compare the AST of the page with a AST of a template and deliver a status including error messages (if any exist).}
+  spec.description   = %q{Contains a parser to read a 101wiki page and create an
+     abstract systax tree. A validator can compare the AST of the page with a
+     AST of a template and deliver a status including error messages (if any exist).}
   spec.homepage      = "https://github.com/klumbe/wiki_validator"
   spec.license       = "MIT"
 
