@@ -22,15 +22,16 @@ module WikiValidator
     def parse_content_raw(parser)
       elements = parser.parse(@content_raw)
       elements.each do |element|
+
+        # correct line-numbers
+        element.line_number += @line_number
+
         if element.kind_of?(Attribute)
           @attribs[element.name.to_sym] = element.value
         else
           element.parse_content_raw(parser)
           @children << element
         end
-
-        # correct line-numbers
-        element.line_number += @line_number
       end
     end
 
