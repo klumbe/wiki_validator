@@ -34,7 +34,7 @@ module WikiValidator
 
   	def parse_constraints(string, params = {})
       parameter = {
-        sectioning: params.fetch(:sectioning, true),
+        sectioning: params.fetch(:sectioning, false),
         return: params.fetch(:return, :default),
         set_ids: params.fetch(:set_ids, false),
       }

@@ -133,6 +133,49 @@ RSpec.describe WikiValidator do
 
     describe '#validate' do
 
+      before :each do
+        file = File.read(File.dirname(__FILE__) + "/input/validator_template.txt")
+        @template = PageDTO.new('Contribution', 'Validation', file)
+      end
+
+      context 'valid page' do
+        it 'returns one valid ValidationStatus' do
+          file = File.read(File.dirname(__FILE__) + "/input/validator_page_valid.txt")
+          page = PageDTO.new('Nice', 'Contribution', file)
+          @wiki_validator.set_page(page)
+          template_names = @wiki_validator.extract_template_names()
+          expect(template_names.size).to eq(1)
+          expect(template_names.first).to eq('Validation:Contribution')
+          @wiki_validator.add_template(@template)
+
+          results = @wiki_validator.validate()
+          expect(results.size).to eq(1)
+          status = results.first
+          expect(status).to be_an_instance_of(ValidationStatus)
+          expect(status.valid?).to eq(true)
+        end
+
+      end
+
+      context 'invalid page' do
+        it 'returns one invald ValidationStatus' do
+          file = File.read(File.dirname(__FILE__) + "/input/validator_page_invalid.txt")
+          page = PageDTO.new('Bad', 'Contribution', file)
+          @wiki_validator.set_page(page)
+          template_names = @wiki_validator.extract_template_names()
+          expect(template_names.size).to eq(1)
+          expect(template_names.first).to eq('Validation:Contribution')
+          @wiki_validator.add_template(@template)
+
+          results = @wiki_validator.validate()
+          expect(results.size).to eq(1)
+          status = results.first
+          expect(status).to be_an_instance_of(ValidationStatus)
+          expect(status.valid?).to eq(false)
+          expect(status.errors.size).to eq(1)
+        end
+      end
+
     end
   end
 end

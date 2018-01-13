@@ -1,0 +1,33 @@
++order[1, 1]{
+	== Headline ==
+	== Characteristics ==
+	+any[0,1]{
+		== Relationships ==
+	}
+	+any[0,1]{
+		== Architecture ==
+	}
+	+any[0,1]{
+		== Usage ==
+	}
+	+section[1,1]{
+		|level: 2
+		|title: Metadata
+
+    [[instanceOf::Namespace:$(template_name)]]
+
+		+link_triplet[1,?]{
+			|relation: uses
+			|namespace: Language
+		}
+		+link_triplet[1, ?]{
+			|relation: uses
+			|namespace: Technology
+		}
+		+link_triplet[1, ?]{
+			|relation: uses
+			|namespace: Feature
+		}
+		+link_external[?, ?]
+	}
+}

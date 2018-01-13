@@ -44,7 +44,7 @@ module WikiValidator
 
     def add_template(template_dto)
       if template_dto.instance_of?(PageDTO)
-        @templates << parse_template(template_dto)
+        @templates << template_dto
       end
     end
 
@@ -107,7 +107,9 @@ module WikiValidator
     def validate
       validation_status = []
       @templates.each do |template|
-        status = Validator.validate(template, page)
+        replace_template_content(template)
+        parse_template(template)
+        status = Validator.validate(@page, template)
         validation_status << status
       end
 
@@ -135,6 +137,12 @@ module WikiValidator
         end
 
         return replaced
+      end
+
+      def replace_template_content(template)
+        variables = extract_variables(template, @page)
+        replaced_content = replace_variables(template.content_string, variables)
+        template.content_string = replaced_content
       end
 
     end

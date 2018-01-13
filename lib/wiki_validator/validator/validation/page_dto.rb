@@ -2,8 +2,8 @@ module WikiValidator
 
 	class PageDTO
 
-		attr_accessor :ast
-		attr_reader :name, :namespace, :content_string
+		attr_accessor :ast, :content_string
+		attr_reader :name, :namespace
 
 		def initialize(name, namespace, content_string)
 			@name = name

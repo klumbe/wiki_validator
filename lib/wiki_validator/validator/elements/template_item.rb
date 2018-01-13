@@ -10,7 +10,7 @@ module WikiValidator
     # attributes not used for comparing elements
     SPECIAL_ATTRIBUTES = [:min, :max, :amount, :strict]
 
-    @re_type = /(?<type>[a-z]+(_(?<subtype>([a-z]+)))?)/
+    @re_type = /((?<type>[a-z]+)(_(?<subtype>([a-z]+)))?)/
     @re_min_max = /(?<min>\d+|\?)[ ]*,[ ]*(?<max>\d+|\?)/
     @re_params = /(?<params>\[[ ]*((?<amount>\d+|\?)|(#{@re_min_max}))[ ]*\])/
     @re_add_params = /(?<params_add>\(([ ]|\S)*\))/
@@ -131,6 +131,7 @@ module WikiValidator
 
           if !match[:subtype].nil? && @subtype == :undefined
             @subtype = match[:subtype].to_sym
+            @attribs[:subtype] = @subtype.to_s
           end
 
           set_body(match)
@@ -257,18 +258,8 @@ module WikiValidator
             valid = true
             # add the found elements to the valid elements list of the parent
             @validation_item.add_valid_elements(child.valid_elements)
-          else
-            # store errors in case the collection is invalid
-            suberrors.concat(child.errors)
           end
         end
-
-    		if !valid
-    			msg = "[#Template: #{@line_number}] None of the constraints in"\
-                " collection \"any\" have been valid."
-    			error = ValidationError.new(-1, msg, suberrors)
-          @validation_item.add_error(error)
-    		end
 
         return error
       end
@@ -286,7 +277,7 @@ module WikiValidator
           strict = true
         end
 
-        if all_children_valid?
+        if all_children_valid?()
           valid_combinations = find_valid_combinations(product, strict)
           if !valid_combinations.empty?
             valid = true
@@ -294,7 +285,7 @@ module WikiValidator
           end
         end
 
-        if !valid
+        if !valid && @min > 0
           str_msg = ""
           if strict
             str_msg = "(strict)"
@@ -313,10 +304,18 @@ module WikiValidator
         # create a list of all the valid items in all children
         valid_elements = []
         @validation_item.children.each do |child|
-          valid_elements << child.valid_elements
+          valid_child_elements = child.valid_elements
+          if !valid_child_elements.empty?
+            valid_elements << valid_child_elements
+          end
         end
-        first = valid_elements.shift
-        product = first.product(*valid_elements)
+
+        if !valid_elements.empty?
+          first = valid_elements.shift
+          product = first.product(*valid_elements)
+        else
+          product = []
+        end
 
         return product
       end
@@ -370,7 +369,7 @@ module WikiValidator
 
         valid_elements_size = @validation_item.valid_elements.size
 
-        if (@min > -1 && valid_elements_size < @min)
+        if (@min > 0 && valid_elements_size < @min)
           msg = "Did only find #{valid_elements_size} of #{@min} #{@type}(s))"
         end
 
