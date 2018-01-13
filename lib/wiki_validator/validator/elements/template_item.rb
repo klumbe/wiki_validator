@@ -59,8 +59,9 @@ module WikiValidator
            end
         end
 
-      elsif @keywords.include?(@type)
-
+      elsif @type == :element || @keywords.include?(@type)
+        # find matching elements
+        #(for type :element any type fits, only attributes care)
         candidates = validate_element(elements)
         valid_candidates = check_min_max(candidates)
         @validation_item.add_valid_elements(valid_candidates)
@@ -409,7 +410,8 @@ module WikiValidator
 
         # run DFS to check each element
         Helper.dfs(elements) do |element|
-          if element.type == @type
+          # only add matching types (if type is :element thats all elements)
+          if element.type == @type || @type == :element
             candidate = ValidationItem.new(self)
             candidate.add_valid_element(element)
             candidates << candidate
