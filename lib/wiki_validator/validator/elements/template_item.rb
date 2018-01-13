@@ -1,5 +1,6 @@
 $LOAD_PATH << File.dirname(__FILE__)
 require 'element.rb'
+require_relative '../helper'
 
 module WikiValidator
 

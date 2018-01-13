@@ -2,6 +2,7 @@ require "wiki_validator/version"
 
 require 'wiki_validator/validator/validator'
 require 'wiki_validator/validator/parser'
+require 'wiki_validator/validator/helper'
 require 'wiki_validator/constants'
 
 module WikiValidator
