@@ -9,7 +9,7 @@
 = Links =
 [external]
 [[internal]]
-[[is_a::triplet]]
+[[is_a::triple]]
 
 = List =
 # Item 1 Level 1

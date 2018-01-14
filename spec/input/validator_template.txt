@@ -16,15 +16,15 @@
 
     [[instanceOf::Namespace:$(template_name)]]
 
-		+link_triplet[1,?]{
+		+link_triple[1,?]{
 			|relation: uses
 			|namespace: Language
 		}
-		+link_triplet[1, ?]{
+		+link_triple[1, ?]{
 			|relation: uses
 			|namespace: Technology
 		}
-		+link_triplet[1, ?]{
+		+link_triple[1, ?]{
 			|relation: uses
 			|namespace: Feature
 		}

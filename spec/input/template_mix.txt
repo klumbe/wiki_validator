@@ -9,5 +9,5 @@
 }
 
 +link[3]{
-  |subtype: triplet
+  |subtype: triple
 }

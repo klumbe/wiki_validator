@@ -25,8 +25,8 @@ some_string some_string
 
 <!--/ORDER ------->
 <!--LINK has to exist at least 3 time(s).-->
-[[<!--Put triplet link here-->]]
-[[<!--Put triplet link here-->]]
-[[<!--Put triplet link here-->]]
+[[<!--Put triple link here-->]]
+[[<!--Put triple link here-->]]
+[[<!--Put triple link here-->]]
 
 <!--/LINK ------->

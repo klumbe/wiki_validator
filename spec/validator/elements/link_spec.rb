@@ -5,7 +5,7 @@ describe WikiValidator::Link do
   before :all do
     @link_external = "[https://google.com]"
     @link_internal = "[[link_to_page]]"
-    @triplet = "[[validated_by::Validation:Template1]]"
+    @triple = "[[validated_by::Validation:Template1]]"
   end
 
   describe '#new' do
@@ -23,7 +23,7 @@ describe WikiValidator::Link do
       expect(link.subtype).to eq(:internal)
       expect(link.content_raw).to eq("link_to_page")
       expect(link.link).to eq("link_to_page")
-      expect(link.triplet).to be_nil
+      expect(link.triple).to be_nil
     end
 
     it 'takes a string and returns an external link' do
@@ -33,19 +33,19 @@ describe WikiValidator::Link do
       expect(link.subtype).to eq(:external)
       expect(link.content_raw).to eq("https://google.com")
       expect(link.link).to eq("https://google.com")
-      expect(link.triplet).to be_nil
+      expect(link.triple).to be_nil
     end
 
-    it 'takes a string and returns a triplet' do
-      link = Link.new(@triplet)
+    it 'takes a string and returns a triple' do
+      link = Link.new(@triple)
       expect(link).to be_an_instance_of(Link)
       expect(link.type).to eq(:link)
-      expect(link.subtype).to eq(:triplet)
+      expect(link.subtype).to eq(:triple)
       str = 'validated_by::Validation:Template1'
       expect(link.content_raw).to eq(str)
       expect(link.link).to eq(str)
-      expect(link.triplet).not_to be_nil
-      expect(link.triplet.size).to be(3)
+      expect(link.triple).not_to be_nil
+      expect(link.triple.size).to be(3)
       expect(link.relation).to eq('validated_by')
       expect(link.namespace).to eq('Validation')
       expect(link.page).to eq('Template1')
@@ -60,8 +60,8 @@ describe WikiValidator::Link do
       expect(attributes).to be_an_instance_of(Hash)
       expect(attributes.size).to eq(13)
       expect(attributes[:link]).to eq('trip::let:abc')
-      expect(attributes[:triplet]).to be_an_instance_of(Array)
-      expect(attributes[:triplet].size).to eq(3)
+      expect(attributes[:triple]).to be_an_instance_of(Array)
+      expect(attributes[:triple].size).to eq(3)
       expect(attributes[:relation]).to eq('trip')
       expect(attributes[:namespace]).to eq('let')
       expect(attributes[:page]).to eq('abc')
@@ -144,8 +144,8 @@ describe WikiValidator::Link do
       end
     end
 
-    context 'is internal link or triplet' do
-      it 'returns an internal link or triplet' do
+    context 'is internal link or triple' do
+      it 'returns an internal link or triple' do
         str_int = '[[internal_link]]'
         str_trip = '[[Trip::let:abc]]'
         link_int = Link.new(str_int)
@@ -164,7 +164,7 @@ describe WikiValidator::Link do
         str_trip = 'Tri::p:let'
         link_int = Link.new('', subtype: :internal, content_raw: str_int)
         link_ext = Link.new('', subtype: :external, content_raw: str_ext)
-        link_trip = Link.new('', subtype: :triplet, content_raw: str_trip)
+        link_trip = Link.new('', subtype: :triple, content_raw: str_trip)
         markup_int = link_int.to_markup
         markup_ext = link_ext.to_markup
         markup_trip = link_trip.to_markup
@@ -176,13 +176,13 @@ describe WikiValidator::Link do
       it 'returns a placeholder if it has been initialized without any string' do
         link_int = Link.new('', subtype: :internal)
         link_ext = Link.new('', subtype: :external)
-        link_trip = Link.new('', subtype: :triplet)
+        link_trip = Link.new('', subtype: :triple)
         markup_int = link_int.to_markup
         markup_ext = link_ext.to_markup
         markup_trip = link_trip.to_markup
         expect(markup_int).to eq('[[<!--Put internal link here-->]]')
         expect(markup_ext).to eq('[<!--Put external link here-->]')
-        expect(markup_trip).to eq('[[<!--Put triplet link here-->]]')
+        expect(markup_trip).to eq('[[<!--Put triple link here-->]]')
       end
     end
   end

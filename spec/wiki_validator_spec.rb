@@ -99,7 +99,7 @@ RSpec.describe WikiValidator do
       it 'takes a page with templates and returns just the names of the templates' do
         str = "# abc\n"\
               "== Metadata ==\n"\
-              "# [[Other::Triplet]]\n"\
+              "# [[Other::triple]]\n"\
               "# [[validatedBy::Validation:Template1]]\n"\
               "# [[validatedby::Validation:Template2]]"
         page_dto = PageDTO.new('name', 'namespace', str)
