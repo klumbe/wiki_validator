@@ -27,7 +27,7 @@ module WikiValidator
 			hash = {
 				full_page_title: @page_name,
 				full_template_name: @template_name,
-				status: valid?(),
+				valid: valid?(),
 				errors: @errors
 			}
 
