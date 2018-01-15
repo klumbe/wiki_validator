@@ -544,11 +544,16 @@ module WikiValidator
             end
           end
 
+          msg_sub = ''
+          if !@subtype.nil? && @subtype != :undefined
+            msg_sub = " and subtype '#{@subtype}'"
+          end
+
           # create error
           if valid.empty?
-            msg += "No Item(s) of type '#{@type}' found."
+            msg += "No element(s) of type '#{@type}'#{msg_sub} found."
           else
-            msg += "Only found #{valid.size} of #{@min} elements of type '#{@type}'."
+            msg += "Only found #{valid.size} of #{@min} elements of type '#{@type}'#{msg_sub}."
           end
 
           pos = -1
