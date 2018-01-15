@@ -22,21 +22,22 @@ module WikiValidator
 		def valid?
 			return @errors.empty?
 		end
-	end
 
-	def as_json(options = {})
-		hash = {
-			full_page_title: @page_name,
-			full_template_name: @template_name,
-			status: valid?(),
-			errors: @errors
-		}
+		def as_json(options = {})
+			hash = {
+				full_page_title: @page_name,
+				full_template_name: @template_name,
+				status: valid?(),
+				errors: @errors
+			}
 
-		return hash
-	end
+			return hash
+		end
 
-	def to_json(*options)
-		self.as_json(*options).to_json(*options)
+		def to_json(*options)
+			self.as_json(*options).to_json(*options)
+		end
+
 	end
 
 end
