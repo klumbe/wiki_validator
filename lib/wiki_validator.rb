@@ -66,15 +66,15 @@ module WikiValidator
       return template_dto
     end
 
-    # finds all triplets used to specify the applied templates
+    # finds all triples used to specify the applied templates
     def extract_template_names
       templates = []
 
       Helper.dfs(@page.ast) do |element|
-        if element.type == :link && element.subtype == :triplet
-          if element.triplet.first.match(TEMPLATE_IDENTIFIER)
-            triplet = element.triplet
-            templates << "#{triplet[1]}:#{triplet[2]}"
+        if element.type == :link && element.subtype == :triple
+          if element.triple.first.match(TEMPLATE_IDENTIFIER)
+            triple = element.triple
+            templates << "#{triple[1]}:#{triple[2]}"
           end
         end
       end

@@ -4,15 +4,15 @@ module WikiValidator
 
   class Link < Element
 
-    attr_reader :link, :triplet, :relation, :namespace, :page
+    attr_reader :link, :triple, :relation, :namespace, :page
 
-    class << self; attr_reader :regex_triplet end
+    class << self; attr_reader :regex_triple end
 
     external = /(?<lb>\[)(?<link>[^\]$]*)(?<rb>\])/
     internal = /(?<lb>\[{2})(?<link>[^\]$]*)(?<rb>\]{2})/
     @regex = /\A#{internal}|#{external}/
     @starts_with = /\[/
-    @regex_triplet = /\A([^:]+?)::([^:]+):([^:\s]+)/
+    @regex_triple = /\A([^:]+?)::([^:]+):([^:\s]+)/
 
     #override method to do nothing
     def parse_content_raw(content_parser); end
@@ -33,7 +33,7 @@ module WikiValidator
 
       str = create_content_str()
       markup = "[#{str}]"
-      if @subtype == :internal || @subtype == :triplet
+      if @subtype == :internal || @subtype == :triple
         markup = "[#{markup}]"
       end
 
@@ -54,7 +54,7 @@ module WikiValidator
             @subtype = :external
 
           else
-            match_triplet()
+            match_triple()
           end
 
         else
@@ -71,13 +71,13 @@ module WikiValidator
         return str
       end
 
-      def match_triplet
-        if @link.match(self.class.regex_triplet)
-          @subtype = :triplet
+      def match_triple
+        if @link.match(self.class.regex_triple)
+          @subtype = :triple
           @relation = $1
           @namespace = $2
           @page = $3
-          @triplet = [$1, $2, $3]
+          @triple = [$1, $2, $3]
         else
           @subtype = :internal
         end
@@ -85,7 +85,7 @@ module WikiValidator
 
       def set_params(params)
         @link = params.fetch(:link, '')
-        @triplet = params.fetch(:triplet, nil)
+        @triple = params.fetch(:triple, nil)
         @relation = params.fetch(:relation, nil)
         @namespace = params.fetch(:namespace, nil)
         @page = params.fetch(:page, nil)
