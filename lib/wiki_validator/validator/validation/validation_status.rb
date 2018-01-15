@@ -4,9 +4,9 @@ module WikiValidator
 
 		attr_reader :page_name, :template_name, :errors
 
-		def initialize(page_name, template_name)
-			@page_name = page_name
-			@template_name = template_name
+		def initialize(page_full_title, template_full_title)
+			@page_name = page_full_title
+			@template_name = template_full_title
 			@errors = []
 		end
 

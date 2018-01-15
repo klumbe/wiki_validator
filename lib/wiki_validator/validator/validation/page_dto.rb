@@ -27,6 +27,10 @@ module WikiValidator
 			values
 		end
 
+		def full_title
+			return "#{@namespace}:#{@name}"
+		end
+
 		def as_json(options={})
 			return self.attributes
 		end

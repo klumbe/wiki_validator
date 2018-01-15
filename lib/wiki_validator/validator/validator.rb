@@ -14,10 +14,10 @@ module WikiValidator
 		# Validates a page against a template and returns a ValidationStatus
 		def self.validate(page_dto, template_dto)
 
-			page_name = page_dto.name
+			page_name = page_dto.full_title
 			page_tree = page_dto.ast
 
-			template_name = template_dto.name
+			template_name = template_dto.full_title
 			template_tree = template_dto.ast
 
 			# check constraints
