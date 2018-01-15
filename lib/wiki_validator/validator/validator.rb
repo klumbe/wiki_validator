@@ -17,7 +17,7 @@ module WikiValidator
 			page_name = page_dto.name
 			page_tree = page_dto.ast
 
-			template_name = page_dto.name
+			template_name = template_dto.name
 			template_tree = template_dto.ast
 
 			# check constraints
