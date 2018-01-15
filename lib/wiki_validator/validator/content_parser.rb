@@ -22,8 +22,8 @@ module WikiValidator
       end
     end
 
-    def parse(content_string)
-      buffer = StringScanner.new(content_string)
+    def parse(raw_content)
+      buffer = StringScanner.new(raw_content)
 
   		# list of elements returned by the parser
       content = []

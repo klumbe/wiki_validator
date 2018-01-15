@@ -22,7 +22,7 @@ After installing the gem, one needs to create a WikiValidator-Instance:
 
 Create a data transfer object to store the information of a page:
 
-    page_dto = WikiValidator::PageDTO.new('page_name', 'page_namespace', 'page_content_string')
+    page_dto = WikiValidator::PageDTO.new('page_name', 'page_namespace', 'page_raw_content')
 
 Assign the page to the validator:
 

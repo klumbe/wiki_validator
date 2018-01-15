@@ -4,9 +4,9 @@ describe WikiValidator::Validator do
 
   def create_dtos_helper(page_string, template_string)
     page_dto = PageDTO.new('page', 'namespace', page_string)
-    page_dto.ast = @parser.parse_content(page_dto.content_string)
+    page_dto.ast = @parser.parse_content(page_dto.raw_content)
     template_dto = PageDTO.new('template', 'template', template_string)
-    template_dto.ast = @parser.parse_constraints(template_dto.content_string)
+    template_dto.ast = @parser.parse_constraints(template_dto.raw_content)
     return [page_dto, template_dto]
   end
 

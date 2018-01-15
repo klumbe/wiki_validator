@@ -37,7 +37,7 @@ module WikiValidator
 
     def parse_page(page_dto)
       if page_dto.instance_of?(PageDTO)
-        page_dto.ast = @parser.parse_content(page_dto.content_string, @parameter[:parser])
+        page_dto.ast = @parser.parse_content(page_dto.raw_content, @parameter[:parser])
       end
 
       return page_dto
@@ -59,7 +59,7 @@ module WikiValidator
 
     def parse_template(template_dto)
       if template_dto.instance_of?(PageDTO)
-        content = template_dto.content_string
+        content = template_dto.raw_content
         template_dto.ast = @parser.parse_constraints(content, @parameter[:parser])
       end
 
@@ -89,7 +89,7 @@ module WikiValidator
 
       if template_dto.instance_of?(PageDTO) && page_dto.instance_of?(PageDTO)
         variables = extract_variables(template_dto, page_dto)
-        template_content_str = replace_variables(template_dto.content_string, variables)
+        template_content_str = replace_variables(template_dto.raw_content, variables)
         template_dto.ast = @parser.parse_constraints(template_content_str, @parameter[:parser])
 
         # generate the markup
@@ -142,8 +142,8 @@ module WikiValidator
 
       def replace_template_content(template)
         variables = extract_variables(template, @page)
-        replaced_content = replace_variables(template.content_string, variables)
-        template.content_string = replaced_content
+        replaced_content = replace_variables(template.raw_content, variables)
+        template.raw_content = replaced_content
       end
 
     end

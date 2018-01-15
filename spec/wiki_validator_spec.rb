@@ -123,7 +123,7 @@ RSpec.describe WikiValidator do
         new_page_dto = @wiki_validator.generate_page(template_dto, page_dto)
         expect(new_page_dto.name).to eq(page_dto.name)
         expect(new_page_dto.namespace).to eq(page_dto.namespace)
-        expect(new_page_dto.content_string).to eq(template_markup_file)
+        expect(new_page_dto.raw_content).to eq(template_markup_file)
       end
     end
 
