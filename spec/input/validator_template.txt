@@ -17,15 +17,15 @@
     [[instanceOf::Namespace:$(template_name)]]
 
 		+link_triple[1,?]{
-			|relation: uses
+			|predicate: uses
 			|namespace: Language
 		}
 		+link_triple[1, ?]{
-			|relation: uses
+			|predicate: uses
 			|namespace: Technology
 		}
 		+link_triple[1, ?]{
-			|relation: uses
+			|predicate: uses
 			|namespace: Feature
 		}
 		+link_external[?, ?]

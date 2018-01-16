@@ -4,7 +4,7 @@ module WikiValidator
 
   class Link < Element
 
-    attr_reader :link, :triple, :relation, :namespace, :page
+    attr_reader :link, :triple, :predicate, :namespace, :page, :object
 
     class << self; attr_reader :regex_triple end
 
@@ -74,9 +74,10 @@ module WikiValidator
       def match_triple
         if @link.match(self.class.regex_triple)
           @subtype = :triple
-          @relation = $1
+          @predicate = $1
           @namespace = $2
           @page = $3
+          @object = "#{@namespace}:#{@page}"
           @triple = [$1, $2, $3]
         else
           @subtype = :internal
@@ -86,7 +87,8 @@ module WikiValidator
       def set_params(params)
         @link = params.fetch(:link, '')
         @triple = params.fetch(:triple, nil)
-        @relation = params.fetch(:relation, nil)
+        @predicate = params.fetch(:predicate, nil)
+        @object = params.fetch(:object, nil)
         @namespace = params.fetch(:namespace, nil)
         @page = params.fetch(:page, nil)
 

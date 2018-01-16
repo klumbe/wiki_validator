@@ -5,7 +5,7 @@ describe WikiValidator::Link do
   before :all do
     @link_external = "[https://google.com]"
     @link_internal = "[[link_to_page]]"
-    @triple = "[[validated_by::Validation:Template1]]"
+    @triple = "[[validated_by::Template:Template1]]"
   end
 
   describe '#new' do
@@ -41,30 +41,32 @@ describe WikiValidator::Link do
       expect(link).to be_an_instance_of(Link)
       expect(link.type).to eq(:link)
       expect(link.subtype).to eq(:triple)
-      str = 'validated_by::Validation:Template1'
+      str = 'validated_by::Template:Template1'
       expect(link.content_raw).to eq(str)
       expect(link.link).to eq(str)
       expect(link.triple).not_to be_nil
       expect(link.triple.size).to be(3)
-      expect(link.relation).to eq('validated_by')
-      expect(link.namespace).to eq('Validation')
+      expect(link.predicate).to eq('validated_by')
+      expect(link.namespace).to eq('Template')
       expect(link.page).to eq('Template1')
+      expect(link.object).to eq('Template:Template1')
     end
   end
 
   describe '#attributes' do
 
     it 'returns all instance variables' do
-      link = Link.new('[[trip::let:abc]]')
+      link = Link.new('[[trip::le:abc]]')
       attributes = link.attributes
       expect(attributes).to be_an_instance_of(Hash)
-      expect(attributes.size).to eq(13)
-      expect(attributes[:link]).to eq('trip::let:abc')
+      expect(attributes.size).to eq(14)
+      expect(attributes[:link]).to eq('trip::le:abc')
       expect(attributes[:triple]).to be_an_instance_of(Array)
       expect(attributes[:triple].size).to eq(3)
-      expect(attributes[:relation]).to eq('trip')
-      expect(attributes[:namespace]).to eq('let')
+      expect(attributes[:namespace]).to eq('le')
+      expect(attributes[:predicate]).to eq('trip')
       expect(attributes[:page]).to eq('abc')
+      expect(attributes[:object]).to eq('le:abc')
     end
   end
 
