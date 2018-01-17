@@ -108,7 +108,7 @@ describe WikiValidator::TemplateItem do
       template_item = TemplateItem.new('+section')
       attributes = template_item.attributes
       expect(attributes).to be_an_instance_of(Hash)
-      expect(attributes.size).to eq(15)
+      expect(attributes.size).to eq(14)
       expect(attributes[:min]).to eq(1)
       expect(attributes[:max]).to eq(-1)
       expect(attributes[:attribs]).to be_an_instance_of(Hash)

@@ -10,14 +10,6 @@ module WikiValidator
     @regex = /^([#\*:;]+)(.*)$/
     @starts_with = /^[#\*:;]/
 
-    # overwrite deep-parsing to fill children-list with the content
-    def parse_content_raw(content_parser)
-      super
-      @children = @content
-      # empty content to not validate things twice
-      @content = []
-    end
-
     def equals?(element)
       equal = false
       if element.kind_of?(List) && element.type == @type
@@ -52,9 +44,6 @@ module WikiValidator
         else
           @level = params.fetch(:level, 1).to_i
         end
-
-        @children = @content
-        @content = []
       end
 
       def set_subtype(symbol)

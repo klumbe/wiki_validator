@@ -48,7 +48,7 @@ describe WikiValidator::Section do
       section = Section.new('= Section =')
       attributes = section.attributes
       expect(attributes).to be_an_instance_of(Hash)
-      expect(attributes.size).to eq(10)
+      expect(attributes.size).to eq(9)
       expect(attributes[:level]).to eq(1)
       expect(attributes[:title]).to eq('Section')
     end

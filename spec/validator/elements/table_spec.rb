@@ -24,7 +24,7 @@ describe WikiValidator::Table do
       table = Table.new(@str)
       attributes = table.attributes
       expect(attributes).to be_an_instance_of(Hash)
-      expect(attributes.size).to eq(9)
+      expect(attributes.size).to eq(8)
       expect(attributes[:rows]).to be_an_instance_of(Array)
     end
   end

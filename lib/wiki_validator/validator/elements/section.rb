@@ -48,7 +48,6 @@ module WikiValidator
         if !match.nil?
           @level = $1.length
           @title = $2.strip
-          @content_raw = @title
         else
           # set initial values either from params or default
           # in case the section does not match

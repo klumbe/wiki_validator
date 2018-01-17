@@ -61,7 +61,7 @@ describe WikiValidator::List do
       list = List.new('#List-Item')
       attributes = list.attributes
       expect(attributes).to be_an_instance_of(Hash)
-      expect(attributes.size).to eq(9)
+      expect(attributes.size).to eq(8)
       expect(attributes[:level]).to eq(1)
     end
   end

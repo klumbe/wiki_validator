@@ -17,7 +17,6 @@ describe WikiValidator::Element do
         subtype: :string,
         line_number: 5,
         content_raw: 'String_new',
-        content: [Element.new("")],
         children: [Element.new("")],
        }
       element = Element.new("String", params)
@@ -26,7 +25,6 @@ describe WikiValidator::Element do
       expect(element.type).to eq(:string)
       expect(element.line_number).to eq(5)
       expect(element.content_raw).to eq('String_new')
-      expect(element.content.size).to eq(1)
       expect(element.children.size).to eq(1)
     end
   end
@@ -188,12 +186,11 @@ describe WikiValidator::Element do
         subtype: :subtype,
         line_number: 1,
         content_raw: 'content_raw',
-        content: [],
         children: [],
       }
       element = Element.new('Element', params)
       attributes = element.attributes
-      expect(attributes.size).to eq(8)
+      expect(attributes.size).to eq(7)
       params.each do |k, v|
         expect(attributes[k]).to eq(v)
       end

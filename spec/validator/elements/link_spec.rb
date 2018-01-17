@@ -59,7 +59,7 @@ describe WikiValidator::Link do
       link = Link.new('[[trip::le:abc]]')
       attributes = link.attributes
       expect(attributes).to be_an_instance_of(Hash)
-      expect(attributes.size).to eq(14)
+      expect(attributes.size).to eq(13)
       expect(attributes[:link]).to eq('trip::le:abc')
       expect(attributes[:triple]).to be_an_instance_of(Array)
       expect(attributes[:triple].size).to eq(3)

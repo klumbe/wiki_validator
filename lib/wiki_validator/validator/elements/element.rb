@@ -35,7 +35,6 @@ module WikiValidator
   		@subtype = params.fetch(:subtype, :undefined).downcase.to_sym
       @line_number = params.fetch(:line_number, -1)
       @content_raw = params.fetch(:content_raw, "")
-      @content = params.fetch(:content, [])
   		@children = params.fetch(:children, [])
       rectify_params()
       init(params)
@@ -135,12 +134,12 @@ module WikiValidator
     end
 
     def parse_content_raw(content_parser)
-      @content = content_parser.parse(@content_raw)
-      @content.each do |element|
+      @children = content_parser.parse(@content_raw)
+      @children.each do |element|
         element.parse_content_raw(content_parser)
       end
 
-  		return @content
+  		return @children
     end
 
   	# can be overwritten to allow specific validation
@@ -217,10 +216,6 @@ module WikiValidator
           else
             @line_number = -1
           end
-        end
-
-        if !@content.instance_of?(Array)
-          @content = []
         end
 
         if !@children.instance_of?(Array)

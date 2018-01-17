@@ -35,7 +35,7 @@ describe WikiValidator::Tag do
       tag = Tag.new(@strings[3])
       attributes = tag.attributes
       expect(attributes).to be_an_instance_of(Hash)
-      expect(attributes.size).to eq(10)
+      expect(attributes.size).to eq(9)
       expect(attributes[:tag]).to eq('tag4')
       expect(attributes[:subtype]).to eq(:tag4)
       expect(attributes[:attribs].size).to eq(1)
