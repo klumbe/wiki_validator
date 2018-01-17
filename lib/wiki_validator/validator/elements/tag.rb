@@ -5,7 +5,7 @@ module WikiValidator
 
   class Tag < Element
 
-    attr_reader :tag, :attribs
+    attr_reader :tag, :attribs_raw, :attribs
 
     @regex = /\A<\s*([^\s\/>]+)\s*(([^\/>]*)(\/>|(>([^<]*)<\/\1>)))/
     @starts_with = /<\w/
@@ -36,6 +36,7 @@ module WikiValidator
       def init(params)
         @type = :tag
         @tag = ""
+        @attribs_raw = ""
         @attribs = []
 
         match = Tag.regex.match(@raw)
@@ -43,9 +44,12 @@ module WikiValidator
           @tag = $1.strip
           @subtype = @tag.downcase.to_sym
           if !$4.nil?
+            @attribs_raw = $3
             @attribs = $3.split
           end
           @content_raw = $6 || ""
+        else
+          set_params(params)
         end
       end
 
@@ -62,6 +66,12 @@ module WikiValidator
         end
 
         return equal
+      end
+
+      def set_params(params)
+        @tag = params.fetch(:tag, "")
+        @attribs_raw = params.fetch(:attribs_raw, "")
+        @attribs = params.fetch(:attribs, [])
       end
   end
 

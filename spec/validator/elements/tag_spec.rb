@@ -7,7 +7,7 @@ describe WikiValidator::Tag do
       "<empty_tag></empty_tag>",
       "<empty_tag2 />",
       "<tag3>Content</tag3>",
-      "<tag4 attr='value'>Content2</tag4>",
+      "<tag4 attr='value' attr2='value2'>Content2</tag4>",
     ]
   end
 
@@ -24,8 +24,10 @@ describe WikiValidator::Tag do
       expect(tag.attribs.size).to eq(0)
 
       expect(tag2).to be_an_instance_of(Tag)
-      expect(tag2.attribs.size).to eq(1)
+      expect(tag2.attribs.size).to eq(2)
       expect(tag2.attribs.first).to eq("attr='value'")
+      expect(tag2.attribs.last).to eq("attr2='value2'")
+      expect(tag2.attribs_raw).to eq("attr='value' attr2='value2'")
     end
 
   end
@@ -35,11 +37,13 @@ describe WikiValidator::Tag do
       tag = Tag.new(@strings[3])
       attributes = tag.attributes
       expect(attributes).to be_an_instance_of(Hash)
-      expect(attributes.size).to eq(9)
+      expect(attributes.size).to eq(10)
       expect(attributes[:tag]).to eq('tag4')
       expect(attributes[:subtype]).to eq(:tag4)
-      expect(attributes[:attribs].size).to eq(1)
+      expect(attributes[:attribs_raw]).to eq("attr='value' attr2='value2'")
+      expect(attributes[:attribs].size).to eq(2)
       expect(attributes[:attribs].include?("attr='value'")).to eq(true)
+      expect(attributes[:attribs].include?("attr2='value2'")).to eq(true)
     end
   end
 
