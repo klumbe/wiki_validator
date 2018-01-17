@@ -19,6 +19,7 @@ describe WikiValidator::Tag do
       expect(tag).to be_an_instance_of(Tag)
       expect(tag.type).to eq(:tag)
       expect(tag.tag).to eq('empty_tag')
+      expect(tag.subtype).to eq(:empty_tag)
       expect(tag.attribs).to be_an_instance_of(Array)
       expect(tag.attribs.size).to eq(0)
 
@@ -36,6 +37,7 @@ describe WikiValidator::Tag do
       expect(attributes).to be_an_instance_of(Hash)
       expect(attributes.size).to eq(10)
       expect(attributes[:tag]).to eq('tag4')
+      expect(attributes[:subtype]).to eq(:tag4)
       expect(attributes[:attribs].size).to eq(1)
       expect(attributes[:attribs].include?("attr='value'")).to eq(true)
     end

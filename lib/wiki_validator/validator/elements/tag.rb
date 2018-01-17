@@ -41,6 +41,7 @@ module WikiValidator
         match = Tag.regex.match(@raw)
         if match
           @tag = $1.strip
+          @subtype = @tag.downcase.to_sym
           if !$4.nil?
             @attribs = $3.split
           end
