@@ -15,10 +15,10 @@ module WikiValidator
 		def self.validate(page_dto, template_dto)
 
 			page_name = page_dto.full_title
-			page_tree = page_dto.ast
+			page_tree = page_dto.content
 
 			template_name = template_dto.full_title
-			template_tree = template_dto.ast
+			template_tree = template_dto.content
 
 			# check constraints
 			status = check_constraints(page_name, template_name, page_tree, template_tree)

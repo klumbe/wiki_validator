@@ -28,7 +28,7 @@ RSpec.describe WikiValidator do
         expect(@wiki_validator.page).to be_nil
         @wiki_validator.set_page(page_dto)
         expect(@wiki_validator.page).to be_an_instance_of(PageDTO)
-        expect(@wiki_validator.page.ast.size).to be > 0
+        expect(@wiki_validator.page.content.size).to be > 0
       end
 
       it 'does nothing if no PageDTO is provided' do
@@ -39,14 +39,14 @@ RSpec.describe WikiValidator do
     end
 
     describe '#parse_page' do
-      it 'takes a PageDTO and sets its ast' do
+      it 'takes a PageDTO and sets its content' do
         str = "= Heading ="
         page_dto = PageDTO.new('name', 'namespace', str)
-        expect(page_dto.ast.size).to eq(0)
+        expect(page_dto.content.size).to eq(0)
         result = @wiki_validator.parse_page(page_dto)
         expect(result).to equal(page_dto)
-        expect(result.ast.size).to eq(1)
-        expect(result.ast.first).to be_an_instance_of(Section)
+        expect(result.content.size).to eq(1)
+        expect(result.content.first).to be_an_instance_of(Section)
       end
     end
 
@@ -81,14 +81,14 @@ RSpec.describe WikiValidator do
     describe '#parse_template' do
       # more test cases can be found in the Parsers class
 
-      it 'takes a PageDTO and sets its ast' do
+      it 'takes a PageDTO and sets its content' do
         str = "+order{\n\t+section\n}"
         template_dto = PageDTO.new('name', 'namespace', str)
-        expect(template_dto.ast.size).to eq(0)
+        expect(template_dto.content.size).to eq(0)
         result = @wiki_validator.parse_template(template_dto)
         expect(result).to equal(template_dto)
-        expect(result.ast.size).to eq(1)
-        first = result.ast.first
+        expect(result.content.size).to eq(1)
+        first = result.content.first
         expect(first).to be_an_instance_of(TemplateItem)
         expect(first.children.size).to eq(1)
         expect(first.children.first.type).to eq(:section)
@@ -104,7 +104,7 @@ RSpec.describe WikiValidator do
               "# [[validatedby::Validation:Template2]]"
         page_dto = PageDTO.new('name', 'namespace', str)
         @wiki_validator.set_page(page_dto)
-        expect(page_dto.ast.size).to be > 0
+        expect(page_dto.content.size).to be > 0
         templates = @wiki_validator.extract_template_names()
 
         expect(templates).to be_an_instance_of(Array)

@@ -15,8 +15,8 @@ describe WikiValidator::PageDTO do
       expect(page_dto.name).to eq(@name )
       expect(page_dto.namespace).to eq(@namespace)
       expect(page_dto.raw_content).to eq(@raw_content)
-      expect(page_dto.ast).to be_an_instance_of(Array)
-      expect(page_dto.ast.size).to eq(0)
+      expect(page_dto.content).to be_an_instance_of(Array)
+      expect(page_dto.content.size).to eq(0)
     end
   end
 
@@ -29,8 +29,8 @@ describe WikiValidator::PageDTO do
       expect(attributes[:name]).to eq(@name)
       expect(attributes[:namespace]).to eq(@namespace)
       expect(attributes[:raw_content]).to eq(@raw_content)
-      expect(attributes[:ast]).to be_an_instance_of(Array)
-      expect(attributes[:ast].size).to eq(0)
+      expect(attributes[:content]).to be_an_instance_of(Array)
+      expect(attributes[:content].size).to eq(0)
     end
   end
 end

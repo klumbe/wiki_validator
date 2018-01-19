@@ -2,7 +2,7 @@ module WikiValidator
 
 	class PageDTO
 
-		attr_accessor :ast, :raw_content
+		attr_accessor :content, :raw_content
 		attr_reader :name, :namespace
 
 		def initialize(name, namespace, raw_content)
@@ -10,7 +10,7 @@ module WikiValidator
 			@namespace = namespace
 			@raw_content = raw_content
 			# abstract syntax tree of the raw_content
-			@ast = []
+			@content = []
 		end
 
 		def attributes
