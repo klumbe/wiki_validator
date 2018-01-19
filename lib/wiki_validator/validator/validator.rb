@@ -5,7 +5,7 @@ Dir[File.expand_path("elements/*.rb", File.dirname(__FILE__))].each do |file|
 end
 
 require 'wiki_validator/validator/validation/validation_status'
-require 'wiki_validator/validator/validation/page_dto'
+require 'wiki_validator/page_dto'
 
 module WikiValidator
 
