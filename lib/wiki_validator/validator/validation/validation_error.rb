@@ -21,9 +21,9 @@ module WikiValidator
 
 		def as_json(options = {})
 			hash = {
-				location: @location
-				message: @message
-				sub_errors: @suberrors
+				location: @location,
+				message: @message,
+				sub_errors: @suberrors,
 			}
 
 			return hash
