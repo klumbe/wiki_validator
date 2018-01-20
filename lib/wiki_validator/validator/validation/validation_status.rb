@@ -26,7 +26,7 @@ module WikiValidator
 		def as_json(options = {})
 			hash = {
 				full_page_title: @page_name,
-				full_template_name: @template_name,
+				full_template_title: @template_name,
 				valid: valid?(),
 				errors: @errors
 			}
