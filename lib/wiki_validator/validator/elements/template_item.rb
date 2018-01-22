@@ -565,6 +565,11 @@ module WikiValidator
               end
             end
           end
+          # add msg that explains that the element has not been found because
+          # of failing child-constraints
+          if (pos != -1)
+            msg += "Child constraints failed."
+          end
           error = ValidationError.new(pos, msg, sub_errors)
         end
 
