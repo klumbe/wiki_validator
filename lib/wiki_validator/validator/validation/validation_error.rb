@@ -2,13 +2,14 @@ module WikiValidator
 
 	class ValidationError
 
-		attr_reader :location, :message, :suberrors
+		attr_reader :location, :template_location, :message, :suberrors
 
 		# location = line_number
 		# message = explanation of the error
 		# suberrors = errors found when examining sub-constraints
-		def initialize(location, message, suberrors = [])
+		def initialize(location, template_location, message, suberrors = [])
 			@location = location
+			@template_location = template_location
 			@message = message
 			@suberrors = suberrors
 		end
@@ -22,6 +23,7 @@ module WikiValidator
 		def as_json(options = {})
 			hash = {
 				location: @location,
+				template_location: @template_location,
 				message: @message,
 				sub_errors: @suberrors,
 			}

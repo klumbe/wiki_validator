@@ -5,7 +5,7 @@ describe WikiValidator::ValidationStatus do
   before :all do
     @page = 'page_name'
     @template = 'template_name'
-    @errors = [ValidationError.new(-1, 'msg'), ValidationError.new(-1, 'msg2')]
+    @errors = [ValidationError.new(-1, -1, 'msg'), ValidationError.new(-1, -1, 'msg2')]
   end
 
   describe '#new' do

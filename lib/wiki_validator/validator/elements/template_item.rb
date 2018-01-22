@@ -68,9 +68,8 @@ module WikiValidator
         @validation_item.add_valid_elements(valid_candidates)
 
       else
-        msg = "[#Template: #{@line_number}]"\
-              "Error in template: '#{@type}' is not a valid element."
-        error = ValidationError.new(-1, msg)
+        msg = "Error in template: '#{@type}' is not a valid element."
+        error = ValidationError.new(-1, @line_number, msg)
         @validation_item.add_error(error)
       end
 
@@ -293,10 +292,9 @@ module WikiValidator
           if strict
             str_msg = "(strict)"
           end
-          msg = "[#Template: #{@line_number}] "
-          msg += "The elements in collection \"order\" haven't"\
+          msg = "The elements in collection \"order\" haven't"\
                   " been found in the correct#{str_msg} order."
-          error = ValidationError.new(-1, msg, suberrors)
+          error = ValidationError.new(-1, @line_number, msg, suberrors)
           @validation_item.add_error(error)
         end
 
@@ -381,8 +379,7 @@ module WikiValidator
         end
 
         if !msg.nil?
-          msg = "[#Template: #{@line_number}] " + msg
-          error = ValidationError.new(-1, msg)
+          error = ValidationError.new(-1, @line_number, msg)
         end
 
         return error
@@ -452,7 +449,7 @@ module WikiValidator
                 else
                   error_msg += "#{k.to_s} should be = '#{v.to_s}'"
                 end
-                error = ValidationError.new(attribs_can[:line_number], error_msg)
+                error = ValidationError.new(attribs_can[:line_number], @line_number, error_msg)
                 candidate.add_error(error)
               end
             end
@@ -500,7 +497,7 @@ module WikiValidator
 
         sort_candidates(candidates, valid, valid_attributes)
 
-        msg = "[#Template: #{@line_number}] "
+        msg = ""
 
         error = check_min(valid, valid_attributes,
                           elements_matched, error, sub_errors, msg)
@@ -572,7 +569,7 @@ module WikiValidator
           else
             msg += " Attributes may be missing."
           end
-          error = ValidationError.new(pos, msg, sub_errors)
+          error = ValidationError.new(pos, @line_number, msg, sub_errors)
         end
 
         return error
@@ -585,7 +582,7 @@ module WikiValidator
           # get line_number of first additional element
           sorted = valid.map {|can| can.valid_elements.first.line_number }
           sorted = sorted.sort
-          error = ValidationError.new(sorted[@max + 2], msg, sub_errors)
+          error = ValidationError.new(sorted[@max + 2], @line_number, msg, sub_errors)
         end
 
         return error

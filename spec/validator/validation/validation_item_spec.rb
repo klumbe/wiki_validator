@@ -43,7 +43,7 @@ describe WikiValidator::ValidationItem do
   describe '#add_error' do
     it 'takes a ValidationError and adds it to  errors list' do
       expect(@validation_item.errors.size).to eq(0)
-      @validation_item.add_error(ValidationError.new(-1, 'message'))
+      @validation_item.add_error(ValidationError.new(-1, 5, 'message'))
       expect(@validation_item.errors.size).to eq(1)
     end
   end
@@ -62,7 +62,7 @@ describe WikiValidator::ValidationItem do
     end
 
     it 'returns false if the ValidationItem contains errors' do
-      @validation_item.add_error(ValidationError.new(-1, 'message'))
+      @validation_item.add_error(ValidationError.new(-1, 4, 'message'))
       expect(@validation_item.valid?).to eq(false)
     end
   end

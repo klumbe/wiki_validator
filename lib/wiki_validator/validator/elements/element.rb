@@ -155,9 +155,8 @@ module WikiValidator
   		end
 
   		if validation_item.valid_elements.empty?
-  			msg = "[#Template: #{@line_number}] "
-  			msg += "No element of type: #{@type} found.)"
-  			error = ValidationError.new(-1, msg)
+  			msg = "No element of type: #{@type} found.)"
+  			error = ValidationError.new(-1, @line_number, msg)
   			validation_item.add_error(error)
   		end
 
