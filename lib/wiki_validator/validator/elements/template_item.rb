@@ -292,7 +292,7 @@ module WikiValidator
           if strict
             str_msg = "(strict)"
           end
-          msg = "The elements in collection \"order\" haven't"\
+          msg = "The elements in collection 'order' haven't"\
                   " been found in the correct#{str_msg} order."
           error = ValidationError.new(-1, @line_number, msg, suberrors)
           @validation_item.add_error(error)
