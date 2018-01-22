@@ -569,6 +569,8 @@ module WikiValidator
           # of failing child-constraints
           if (pos != -1)
             msg += " Child constraints failed."
+          else
+            msg += " Attributes may be missing."
           end
           error = ValidationError.new(pos, msg, sub_errors)
         end
