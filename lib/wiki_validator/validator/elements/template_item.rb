@@ -371,11 +371,11 @@ module WikiValidator
         valid_elements_size = @validation_item.valid_elements.size
 
         if (@min > 0 && valid_elements_size < @min)
-          msg = "Did only find #{valid_elements_size} of #{@min} #{@type.upcase}(s))"
+          msg = "Did only find #{valid_elements_size} of #{@min} #{Helper.pluralize(@type.upcase, @min)}"
         end
 
         if (@max > -1 && valid_elements_size > @max)
-          msg = "Does contain more than #{@max} #{@type.upcase}(s)"
+          msg = "Does contain more than #{@max} #{Helper.pluralize(@type.upcase, @min)}"
         end
 
         if !msg.nil?
@@ -548,9 +548,9 @@ module WikiValidator
 
           # create error
           if valid.empty?
-            msg += "#{@type.upcase}(s)#{msg_sub} not found."
+            msg += "#{Helper.pluralize(@type.upcase, @min)}#{msg_sub} not found."
           else
-            msg += "Only found #{valid.size} of #{@min} #{@type.upcase}(s)#{msg_sub}."
+            msg += "Only found #{valid.size} of #{@min} #{Helper.pluralize(@type.upcase, @min)}#{msg_sub}."
           end
 
           pos = -1
@@ -582,7 +582,7 @@ module WikiValidator
           if !@subtype.nil? && @subtype != :undefined
             msg_sub = " and subtype '#{@subtype.upcase}'"
           end
-          msg += "Found too many #{@type.upcase}(s)#{msg_sub} (#{valid.size} of #{@max})."
+          msg += "Found too many #{Helper.pluralize(@type.upcase, @max)}#{msg_sub} (#{valid.size} of #{@max})."
           # get line_number of first additional element
           sorted = valid.map {|can| can.valid_elements.first.line_number }
           sorted = sorted.sort

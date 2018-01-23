@@ -72,6 +72,20 @@ module WikiValidator
       end
     end
 
+    # to avoid dependencies to 'active_support/inflector'
+    def self.pluralize(str, amount, plural=nil)
+      result = ''
+      if amount == 1
+        result = str
+      elsif plural
+        result = plural
+      else
+        result = "#{str}s"
+      end
+
+      return result
+    end
+
   end
 
 end
