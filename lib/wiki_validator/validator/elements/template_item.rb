@@ -443,7 +443,7 @@ module WikiValidator
             attribs.each do |k, v|
               if !attribute_equal?(attribs_can[k], v)
                 # create error for each wrong attribute found:
-                error_msg = "[#{element.line_number}] #{element.type.to_s}: "
+                error_msg = "[#{element.type.upcase}: "
                 if attribs_can[k].nil?
                   error_msg += "#{k.to_s} not set"
                 else
@@ -543,7 +543,7 @@ module WikiValidator
 
           msg_sub = ''
           if !@subtype.nil? && @subtype != :undefined
-            msg_sub = " and subtype '#{@subtype.upcase}'"
+            msg_sub = " with subtype #{@subtype.upcase}"
           end
 
           # create error
