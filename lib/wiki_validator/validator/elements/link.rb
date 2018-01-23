@@ -63,7 +63,30 @@ module WikiValidator
       end
 
       def create_content_str
-        str = @content_raw
+        str = ''
+        if @content_raw != ''
+          str = @content_raw
+        elsif (@subtype == :triple) && (!@predicate.nil? || !@object.nil? || !@namespace.nil? || !@page.nil?)
+          predicate = @predicate
+          if predicate == ''
+            predicate = Comment.new('', content_raw: "Any predicate").to_markup
+          end
+          object = @object
+          if object == ''
+            namespace = @namespace
+            page = @page
+            if namespace == ''
+              namespace = Comment.new('', content_raw: "Any namespace").to_markup
+            end
+
+            if page == ''
+              page = Comment.new('', content_raw: "Any page name").to_markup
+            end
+
+            object = "#{namespace}:#{page}"
+          end
+          str = "#{predicate}::#{object}"
+        end
         if str == ''
           str = Comment.new('', content_raw: "Put #{@subtype} link here").to_markup
         end
