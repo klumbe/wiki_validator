@@ -89,7 +89,7 @@ module WikiValidator
           str_link = " => #{predicate}::#{object}"
         end
         if str == ''
-          str = Comment.new('', content_raw: "Put #{@subtype} link here").to_markup
+          str = Comment.new('', content_raw: "Put #{@subtype} link here#{str_link}").to_markup
         end
 
         return str
