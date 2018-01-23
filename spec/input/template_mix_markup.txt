@@ -1,7 +1,7 @@
 <!--ORDER has to exist between 1 and 2 times.-->
 <!--Every item needs to appear in the correct order.
 STRICT mode: No other elements are allowed between them.-->
-<!--SECTION has to exist at least 2 time(s).-->
+<!--SECTION has to exist at least 2 times.-->
 <!--Change section level as needed:-->
 =<!--Put your section title here.-->=
 <!--Change section level as needed:-->
@@ -17,14 +17,14 @@ string
 some_string some_string 
 <!--/STRING ------->
 
-<!--SECTION has to exist at least 2 time(s).-->
+<!--SECTION has to exist at least 2 times.-->
 ==<!--Put your section title here.-->==
 ==<!--Put your section title here.-->==
 
 <!--/SECTION ------->
 
 <!--/ORDER ------->
-<!--LINK has to exist at least 3 time(s).-->
+<!--LINK has to exist at least 3 times.-->
 [[<!--Put triple link here-->]]
 [[<!--Put triple link here-->]]
 [[<!--Put triple link here-->]]

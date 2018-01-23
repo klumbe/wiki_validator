@@ -362,16 +362,16 @@ describe WikiValidator::TemplateItem do
           element.add_child(TemplateItem.new('+section'))
           element.add_child(TemplateItem.new('+link'))
           markup = element.to_markup
-          str = "<!--ORDER must not appear more often than 1 time(s).-->\n"\
+          str = "<!--ORDER must not appear more often than once.-->\n"\
                 "<!--Every item needs to appear in the correct order.-->\n"\
-                "<!--STRING has to exist at least 1 time(s).-->\n"\
+                "<!--STRING has to exist at least once.-->\n"\
                 "some_string \n"\
                 "<!--/STRING ------->\n\n"\
-                "<!--SECTION has to exist at least 1 time(s).-->\n"\
+                "<!--SECTION has to exist at least once.-->\n"\
                 "<!--Change section level as needed:-->\n"\
                 "=<!--Put your section title here.-->=\n\n"\
                 "<!--/SECTION ------->\n\n"\
-                "<!--LINK has to exist at least 1 time(s).-->\n"\
+                "<!--LINK has to exist at least once.-->\n"\
                 "[<!--Put undefined link here-->]\n\n"\
                 "<!--/LINK ------->\n\n"\
                 "<!--/ORDER ------->"
@@ -386,16 +386,16 @@ describe WikiValidator::TemplateItem do
           element.add_child(TemplateItem.new('+section'))
           element.add_child(TemplateItem.new('+link'))
           markup = element.to_markup
-          str = "<!--ANY has to exist at least 1 time(s).-->\n"\
+          str = "<!--ANY has to exist at least once.-->\n"\
                 "<!--Any element can be picket and (within the bounds) exist multiple times.-->\n"\
-                "<!--STRING has to exist at least 1 time(s).-->\n"\
+                "<!--STRING has to exist at least once.-->\n"\
                 "some_string \n"\
                 "<!--/STRING ------->\n\n"\
-                "<!--SECTION has to exist at least 1 time(s).-->\n"\
+                "<!--SECTION has to exist at least once.-->\n"\
                 "<!--Change section level as needed:-->\n"\
                 "=<!--Put your section title here.-->=\n\n"\
                 "<!--/SECTION ------->\n\n"\
-                "<!--LINK has to exist at least 1 time(s).-->\n"\
+                "<!--LINK has to exist at least once.-->\n"\
                 "[<!--Put undefined link here-->]\n\n"\
                 "<!--/LINK ------->\n\n"\
                 "<!--/ANY ------->"
@@ -413,12 +413,12 @@ describe WikiValidator::TemplateItem do
         result = "<!--SECTION has to exist between 2 and 3 times.-->\n"\
                   "<!--Change section level as needed:-->\n"\
                   "=<!--Put your section title here.-->=\n\n"\
-                  "<!--STRING has to exist at least 5 time(s).-->\n"\
+                  "<!--STRING has to exist at least 5 times.-->\n"\
                   "some_string some_string some_string some_string some_string \n"\
                   "<!--/STRING ------->\n"\
                   "<!--Change section level as needed:-->\n"\
                   "=<!--Put your section title here.-->=\n\n"\
-                  "<!--STRING has to exist at least 5 time(s).-->\n"\
+                  "<!--STRING has to exist at least 5 times.-->\n"\
                   "some_string some_string some_string some_string some_string \n"\
                   "<!--/STRING ------->\n\n"\
                   "<!--/SECTION ------->"
