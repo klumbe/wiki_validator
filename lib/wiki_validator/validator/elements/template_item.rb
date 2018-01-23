@@ -550,7 +550,7 @@ module WikiValidator
           if valid.empty?
             msg += "No #{@type.upcase}(s)#{msg_sub} found."
           else
-            msg += "Only found #{valid.size} of #{@min} #{@type.upcase}#{msg_sub}."
+            msg += "Only found #{valid.size} of #{@min} #{@type.upcase}(s)#{msg_sub}."
           end
 
           pos = -1
