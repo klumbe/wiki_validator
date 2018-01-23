@@ -156,9 +156,9 @@ module WikiValidator
 
   		if validation_item.valid_elements.empty?
         if !@subtype.nil? && @subtype != :undefined
-          msg_sub = " and subtype '#{@subtype}'"
+          msg_sub = " and subtype #{@subtype.upcase}"
         end
-  			msg = "No element of type: #{@type}#{msg_sub} found.)"
+  			msg = "No #{@type.upcase}#{msg_sub} found.)"
   			error = ValidationError.new(-1, @line_number, msg)
   			validation_item.add_error(error)
   		end

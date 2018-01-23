@@ -68,7 +68,7 @@ module WikiValidator
         @validation_item.add_valid_elements(valid_candidates)
 
       else
-        msg = "Error in template: '#{@type}' is not a valid element."
+        msg = "Error in template: #{@type.upcase} is not a valid element."
         error = ValidationError.new(-1, @line_number, msg)
         @validation_item.add_error(error)
       end
@@ -371,11 +371,11 @@ module WikiValidator
         valid_elements_size = @validation_item.valid_elements.size
 
         if (@min > 0 && valid_elements_size < @min)
-          msg = "Did only find #{valid_elements_size} of #{@min} #{@type}(s))"
+          msg = "Did only find #{valid_elements_size} of #{@min} #{@type.upcase}(s))"
         end
 
         if (@max > -1 && valid_elements_size > @max)
-          msg = "Does contain more than #{@max} #{@type}(s)"
+          msg = "Does contain more than #{@max} #{@type.upcase}(s)"
         end
 
         if !msg.nil?
@@ -543,14 +543,14 @@ module WikiValidator
 
           msg_sub = ''
           if !@subtype.nil? && @subtype != :undefined
-            msg_sub = " and subtype '#{@subtype}'"
+            msg_sub = " and subtype '#{@subtype.upcase}'"
           end
 
           # create error
           if valid.empty?
-            msg += "No element(s) of type '#{@type}'#{msg_sub} found."
+            msg += "No #{@type.upcase}(s)#{msg_sub} found."
           else
-            msg += "Only found #{valid.size} of #{@min} elements of type '#{@type}'#{msg_sub}."
+            msg += "Only found #{valid.size} of #{@min} #{@type.upcase}#{msg_sub}."
           end
 
           pos = -1
@@ -578,7 +578,11 @@ module WikiValidator
       def check_max(valid, error, sub_errors, msg)
 
         if !(valid.size <= @max || @max == -1)
-          msg += "Found too many elements of type '#{@type}' (#{valid.size} of #{@max})."
+          msg_sub = ''
+          if !@subtype.nil? && @subtype != :undefined
+            msg_sub = " and subtype '#{@subtype.upcase}'"
+          end
+          msg += "Found too many #{@type.upcase}(s)#{msg_sub} (#{valid.size} of #{@max})."
           # get line_number of first additional element
           sorted = valid.map {|can| can.valid_elements.first.line_number }
           sorted = sorted.sort
