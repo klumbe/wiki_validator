@@ -294,6 +294,10 @@ module WikiValidator
           end
           msg = "The elements in collection 'order' haven't"\
                   " been found in the correct#{str_msg} order."
+          if !suberrors.empty?
+            msg += " #{Helper.pluralize('Child', suberrors.size, 'Children')}"\
+                   " #{Helper.pluralize('is', suberrors.size, 'are')} missing."
+          end
           error = ValidationError.new(-1, @line_number, msg, suberrors)
           @validation_item.add_error(error)
         end
