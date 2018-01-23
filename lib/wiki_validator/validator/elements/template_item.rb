@@ -548,7 +548,7 @@ module WikiValidator
 
           # create error
           if valid.empty?
-            msg += "No #{@type.upcase}(s)#{msg_sub} found."
+            msg += "#{@type.upcase}(s)#{msg_sub} not found."
           else
             msg += "Only found #{valid.size} of #{@min} #{@type.upcase}(s)#{msg_sub}."
           end
