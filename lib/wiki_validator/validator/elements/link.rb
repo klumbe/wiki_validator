@@ -1,5 +1,7 @@
 $LOAD_PATH << File.dirname(__FILE__)
 require 'element.rb'
+require 'comment.rb'
+
 module WikiValidator
 
   class Link < Element
@@ -69,24 +71,29 @@ module WikiValidator
           str = @content_raw
         elsif (@subtype == :triple) && (!@predicate.nil? || !@object.nil? || !@namespace.nil? || !@page.nil?)
           predicate = @predicate
-          if predicate == ''
+          if predicate.nil?
             predicate = Comment.new('', content_raw: "Any predicate").to_markup
           end
           object = @object
-          if object == ''
+          if object.nil?
             namespace = @namespace
             page = @page
-            if namespace == ''
+            if namespace.nil?
               namespace = Comment.new('', content_raw: "Any namespace").to_markup
             end
 
-            if page == ''
+            if page.nil?
               page = Comment.new('', content_raw: "Any page name").to_markup
             end
 
             object = "#{namespace}:#{page}"
           end
-          str_link = " => #{predicate}::#{object}"
+          str_link = "#{predicate}::#{object}"
+          if !@predicate.nil? && !@object.nil?
+            str = str_link
+          else
+            str_link = " => #{str_link}"
+          end
         end
         if str == ''
           str = Comment.new('', content_raw: "Put #{@subtype} link here#{str_link}").to_markup
@@ -118,6 +125,10 @@ module WikiValidator
 
         if @content_raw != '' && @link == ''
           @link = @content_raw
+        end
+
+        if !@namespace.nil? && !@page.nil?
+          @object = "#{@namespace}:#{@page}"
         end
       end
   end

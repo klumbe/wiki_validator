@@ -186,6 +186,27 @@ describe WikiValidator::Link do
         expect(markup_ext).to eq('[<!--Put external link here-->]')
         expect(markup_trip).to eq('[[<!--Put triple link here-->]]')
       end
+
+      it 'returns placeholder for missing triple parts only' do
+        triple1 = Link.new('', {subtype: :triple, predicate: 'predicate'})
+        triple2 = Link.new('', {subtype: :triple, object: 'Namespace:Page'})
+        triple3 = Link.new('', {subtype: :triple, namespace: 'Namespace'})
+        triple4 = Link.new('', {subtype: :triple, page: 'Page'})
+        triple5 = Link.new('', {subtype: :triple, predicate: 'predicate', namespace: 'Namespace'})
+        triple6 = Link.new('', {subtype: :triple, predicate: 'predicate', namespace: 'Namespace', page: 'Page'})
+        str1 = '[[<!--Put triple link here => predicate::<!--Any namespace-->:<!--Any page name-->-->]]'
+        str2 = '[[<!--Put triple link here => <!--Any predicate-->::Namespace:Page-->]]'
+        str3 = '[[<!--Put triple link here => <!--Any predicate-->::Namespace:<!--Any page name-->-->]]'
+        str4 = '[[<!--Put triple link here => <!--Any predicate-->::<!--Any namespace-->:Page-->]]'
+        str5 = '[[<!--Put triple link here => predicate::Namespace:<!--Any page name-->-->]]'
+        str6 = '[[predicate::Namespace:Page]]'
+        expect(triple1.to_markup).to eq(str1)
+        expect(triple2.to_markup).to eq(str2)
+        expect(triple3.to_markup).to eq(str3)
+        expect(triple4.to_markup).to eq(str4)
+        expect(triple5.to_markup).to eq(str5)
+        expect(triple6.to_markup).to eq(str6)
+      end
     end
   end
 end
