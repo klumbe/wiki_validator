@@ -574,7 +574,7 @@ module WikiValidator
             msg += " Attributes may be missing."
           end
           @attribs.each do |k, v|
-            if k != 'subtype'
+            if k != :subtype
               msg += "\n- #{k}: #{v}"
             end
           end
