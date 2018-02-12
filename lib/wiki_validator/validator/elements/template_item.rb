@@ -573,6 +573,9 @@ module WikiValidator
           else
             msg += " Attributes may be missing."
           end
+          @attribs.each do |k, v|
+            msg += "\n#{k}: #{v}"
+          end
           error = ValidationError.new(pos, @line_number, msg, sub_errors)
         end
 
